@@ -90,54 +90,14 @@
 		text-align: justify;
 	}
 
-/*********************************************************************************/
-/* Image Style                                                                   */
-/*********************************************************************************/
-
-	.image
-	{
-		display: inline-block;
+	.dropdown-content {
+		display: none;
+		position: absolute;
 	}
-	
-	.image img
-	{
+
+	.dropdown:hover .dropdown-content {
 		display: block;
-		width: 100%;
 	}
-	
-	.image-full
-	{
-		display: block;
-		width: 100%;
-		margin: 0 0 0 0;
-	}
-	
-	.image-left
-	{
-		float: left;
-		margin: 0 2em 2em 0;
-	}
-	
-	.image-centered
-	{
-		display: block;
-		margin: 0 0 2em 0;
-	}
-	
-	.image-centered img
-	{
-		margin: 0 auto;
-		width: auto;
-	}
-
-/*********************************************************************************/
-/* List Styles                                                                   */
-/*********************************************************************************/
-
-	ul.style1
-	{
-	}
-
 
 /*********************************************************************************/
 /* Social Icon Styles                                                            */
@@ -179,84 +139,6 @@
 		text-align: center;
 		font-size: 1.5em;
 		color: rgba(255,255,255,.3);
-	}
-
-/*********************************************************************************/
-/* Major Styles                                                                  */
-/*********************************************************************************/
-
-	.major
-	{
-		overflow: hidden;
-		margin-bottom: 4em;
-		text-align: center;
-	}
-	
-	.major h2
-	{
-		letter-spacing: 0.10em;
-		text-transform: uppercase;
-		font-size: 3em;
-		font-weight: 700;
-		color: #3f3f3f;
-	}
-
-	.major .byline
-	{
-		display: block;
-		padding-top: 0.2em;
-		font-weight: 300;
-		font-size: 2em;
-	}
-
-/*********************************************************************************/
-/* Title Styles                                                                  */
-/*********************************************************************************/
-
-	.title
-	{
-		text-align: center;
-	}
-	
-	.title h2
-	{
-		letter-spacing: 0.10em;
-		text-transform: uppercase;
-		font-weight: 700;
-		color: #3f3f3f;
-	}
-
-	.title .byline
-	{
-		display: block;
-		padding-top: 1em;
-		font-weight: 300;
-		font-size: 1.1em;
-	}
-
-
-/*********************************************************************************/
-/* Button Style                                                                  */
-/*********************************************************************************/
-
-	.button
-	{
-		display: inline-block;
-		margin: 1em 0em;
-		padding: 1em 3em 1em 3em;
-		background: #f6f6f6;
-		border-radius: 8px;
-		letter-spacing: 0.20em;
-		text-decoration: none;
-		text-align: center;
-		text-transform: uppercase;
-		font-weight: 400;
-		font-size: 0.90em;
-		color: #FFF;
-	}
-	
-	.button:before
-	{
 	}
 		
 /*********************************************************************************/
@@ -377,44 +259,6 @@
 	}
 
 /*********************************************************************************/
-/* Content                                                                       */
-/*********************************************************************************/
-
-	#content
-	{
-		float: left;
-		width: 588px;
-		text-align: center;
-	}
-	
-	#content .title
-	{
-		padding: 1em 2em 2em 2em;
-		text-align: center;
-	}
-	
-	#content h2
-	{
-		font-size: 2em;
-	}
-	
-	#content .byline
-	{
-		padding-top: 0;
-		font-size: 1.5em;
-	}
-
-/*********************************************************************************/
-/* Sidebar                                                                       */
-/*********************************************************************************/
-
-	#sidebar
-	{
-		float: right;
-		width: 588px;
-	}
-
-/*********************************************************************************/
 /* Footer                                                                        */
 /*********************************************************************************/
 
@@ -447,99 +291,4 @@
 	{
 		text-decoration: none;
 		color: #8C8C8C;
-	}
-
-/*********************************************************************************/
-/* Featured                                                                      */
-/*********************************************************************************/
-
-	#featured-wrapper
-	{
-		overflow: hidden;
-		padding: 5em 0em;
-		background: #FFF;
-	}
-	
-	#featured h2
-	{
-		text-align: center;
-	}
-
-	#featured .icon
-	{
-		position: relative;
-		display: block;
-		background: #f6f6f6;
-		margin: 0px auto 20px auto;
-		line-height: 2.5em;
-		font-size: 4em;
-		text-align: center;
-		color: #FFF;
-	}
-
-	.column1,
-	.column2,
-	.column3,
-	.column4
-	{
-		width: 282px;
-	}
-	
-	.column1,
-	.column2
-	{
-		float: left;
-		margin-right: 24px;
-	}
-	
-	.column3
-	{
-		float: left;
-	}
-	
-	.column4
-	{
-		float: right;
-	}
-
-/*********************************************************************************/
-/* Portfolio                                                                     */
-/*********************************************************************************/
-
-	#portfolio-wrapper
-	{
-		padding: 8em 0em 6em 0em;
-	}
-	
-	#portfolio
-	{
-		overflow: hidden;
-		text-align: center;
-	}
-	
-	#portfolio .major h2,
-	#portfolio .major .byline
-	{
-		color: rgba(255,255,255,0.9);
-	}
-	
-	#portfolio img
-	{
-		margin: 0;
-		padding: 0;
-	}
-	
-	#portfolio .box
-	{
-		padding: 30px;
-		background: #FFF;
-		border-radius: 0px 0px 8px 8px;
-		border-right: 1px solid #DADADA;
-		border-left: 1px solid #DADADA;
-	}
-
-	#contact .major h2,
-	#contact .major .byline
-	{
-		color: rgba(255,255,255,0.9);
 	}
