@@ -1,0 +1,50 @@
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+
+
+
+//there is no confirmation on the server side or backup, but this isn't client facing and I don't have an alternative that could be triggered by a failed attempt
+//could make sense to add later tho
+function reportError(errorMsg) {
+  console.error(errorMsg)
+  $.ajax({
+    url: 'https://script.google.com/macros/s/AKfycbwkQIwNAxzfPmo6Awla2CgnMT4DBY9YJ6Qpi7RaCsW5XqH6x2oU/exec?error=' + errorMsg,
+    dataType: 'jsonp'
+  });
+}
+
+
+
+
+  function loadClient() {
+    gapi.client.setApiKey("AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo");
+    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/civicinfo/v2/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { reportError("Error loading GAPI client for API: " + JSON.stringify(err)); });
+  }
+
+  function execute() {
+    loadClient()
+    return gapi.client.civicinfo.representatives.representativeInfoByAddress({
+      "address": '182 Culpeze Road',
+      "includeOffices": true,
+      "levels": [
+        "administrativeArea1"
+      ],
+      "roles": [
+        "legislatorLowerBody",
+        "legislatorUpperBody"
+      ]
+    }).then(function(response) {
+      //Handle the results here (response.result has the parsed body).
+      console.log("Response", response);
+    },
+    function(err) { reportError("Execute error:" + JSON.stringify(err)); });
+  }
+  gapi.load("client");
+
+</script>
+<button onclick="loadClient()">load</button>
+<button onclick="execute()">execute</button>

@@ -13,3 +13,13 @@ setTimeout(function() {
 		tabs[x].children[0].style.letterSpacing = '';
 	}
 }, 10);
+
+//there is no confirmation on the server side or backup, but this isn't client facing and I don't have an alternative that could be triggered by a failed attempt
+//could make sense to add later tho
+function reportError(errorMsg) {
+	console.error(errorMsg)
+	$.ajax({
+		url: 'https://script.google.com/macros/s/AKfycbwkQIwNAxzfPmo6Awla2CgnMT4DBY9YJ6Qpi7RaCsW5XqH6x2oU/exec?error=' + errorMsg,
+		dataType: 'jsonp'
+	});
+}
