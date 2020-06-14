@@ -99,6 +99,33 @@
 		display: block;
 	}
 
+	.required {
+		color: red;
+	}
+
+	#districtFinder {
+		text-align: center;
+	}
+
+	#petitionTemplate p {
+		font-family: serif;
+	}
+
+	#petitionTemplate input {
+		font: inherit;
+		margin: 0;
+		padding: 0;
+		line-height: normal;
+
+		min-width: 10px;
+	}
+	#hiddenMeasure {
+		font: inherit;
+		margin: 0;
+		padding: 0;
+		display: none;
+		white-space: pre;
+	}
 
 /*********************************************************************************/
 /* Social Icon Styles                                                            */

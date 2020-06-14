@@ -39,17 +39,47 @@
 	<h1>Our Story</h1>
 	<p></p>
 
-	<!--awaiting mailerlite verification<h1>Contact Us</h1>
-	<p></p>-->
+	<h1>Contact Us</h1>
+	Name: <input type='text' id='contactName'><br>
+	Email: <input type='email' id='contactEmail'><br>
+	Message:<br> <textarea id='contactMessage'></textarea><br>
+	<button onclick='submitContact()'>Submit</button>
 
 	<h1>People</h1>
 	<p></p>
 </div>
+<script>
+	//injection security isn't a concern here bc they can just send more variables, which would do nothing. 
+	//replace this with a backend solution tbh
+	function submitContact() {
+		$.ajax({
+			url: 'https://script.google.com/macros/s/AKfycbyBeW08zpxaFHZBXJlyyXRz3ncz0aEphR6x21WwLv5-ZafdrGY/exec?msg=' + document.getElementById('contactName').value + ' - ' + document.getElementById('contactEmail').value + ' - ' + document.getElementById('contactMessage').value,
+			dataType: 'jsonp'
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			try {
+				var sentInfo = document.getElementById('contactName').value + ' - ' + document.getElementById('contactEmail').value + ' - ' + document.getElementById('contactMessage').value
+			} catch {
+				var sentInfo = 'Inputs could not be collected.';
+			}
+			reportError('Contact form was not successfully submitted. jqXHR: ' + JSON.stringify(jqXHR) + ' ------ textStatus: ' + textStatus + ' ------ errorThrown: ' + errorThrown + '------ Sent Info: ' + sentInfo)
+			alert('Your messsage was not able to be delivered. Please try again later. If you continue to experience issues please contact us via email or social media.');
+		});
+	}
+
+	//this is called by the AJAX response
+	function msgReceipt() {
+		alert('Your message was successfully sent. Thank you!');
+		document.getElementById('contactName').value = '';
+		document.getElementById('contactEmail').value = '';
+		document.getElementById('contactMessage').value = '';
+	}
+</script>
 <div id="copyright" class="container">
 	<ul class='contact'>
 		<li><a href="comingsoon" class="icon icon-facebook"></a></li>
 		<li><a href="https://www.instagram.com/ncforbettergovt/" class="icon icon-instagram"></a></li>
 		<li><a href="comingsoon" class="icon icon-twitter"></a></li>
+		<li><a href="comingsoon" class="icon icon-linkedin"></a></li>
 		<li><a href="takeaction#mailinglist" class="icon icon-rss"></a></li>
 	</ul>
 
@@ -58,10 +88,5 @@
 	
 	<p>Adapted from <a href='https://templated.co/swarming'>Swarming</a> by <a href="http://templated.co" rel="nofollow">TEMPLATED</a> | Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
 </div>
-<script>
-	setTimeout(function() {
-		alert('This page is a placeholder and will have more information in the near future.')
-	}, 200);
-</script>
 </body>
 </html>

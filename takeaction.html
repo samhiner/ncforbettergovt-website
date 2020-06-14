@@ -44,16 +44,50 @@
 	<h1>Send an Email</h1>
 	<div>
 		<div id='districtFinder'>
-			<input type='text' id='address' placeholder='Address' style='width: 400px'>
+			<form autocomplete='off'><input type='text' id='address' autocomplete='off' placeholder='Address' style='width: 100%'></form>
 			<button onclick='getDistricts()'>Find Your District</button>
+		</div><br>
+		<div id='petitionTemplate'>
+			<span id='hiddenWidthSizer'></span> <!--when you type, the length of the text is measured in here to find out what the input width should be-->
+			<span id='hiddenHeightSizer'></span>
+			<p>My name is <input type='text' id='petitionName' placeholder='Your Name' onkeyup='updateSignature()' required><span class='required'>*</span> and I am a constituent of yours. <input type='text' id='petitionTitle' placeholder='Your Title' data-tip='List any positions/influence you have in your specific community. Community leaders sway legislators more.'> After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br><textarea id='petitionOtherInfo' style='width: 100%' placeholder='Why else does this strike a chord with you. Feel free to add a personal story/anecdote, but make sure to stay nice'></textarea><br> I think this needs to be addressed by our state legislature.
+
+			Should you be elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to abolish them.<br><br>
+
+			Sincerely,<br><br>
+
+			<input type='text' id='petitionSignature' placeholder='Your Name' disabled></p>
 		</div>
-		<div id='emailTemplate'></div>
+		<h1>Give Them A Call</h1>
 		<div id='phoneInfo'>
 
 		</div>
 	</div>
 </div>
 <script>
+
+	//TODO do something for what it should default to before you type and make it look better.
+
+	$(document).on('input', function() {
+		$('#petitionTemplate input').each(function(index) {
+			if ($(this).val() != '') {
+				$('#hiddenWidthSizer').text($(this).val());
+				$(this).width($('#hiddenWidthSizer').width() + 2);
+			} else {
+				$('#hiddenWidthSizer').text($(this).attr('placeholder'));
+				$(this).width($('#hiddenWidthSizer').width() + 2);
+			}
+		});
+		$('#petitionTemplate textarea')
+	});
+	$(document).trigger('input')
+
+	function updateSignature() {
+		document.getElementById('petitionSignature').value = document.getElementById('petitionName').value;
+		$('#hiddenWidthSizer').text($('#petitionSignature').val());
+		$('#petitionSignature').width($('#hiddenWidthSizer').width() + 2);
+	}
+
 	//autocomplete while you are looking up your address
 	var options = {
 		bounds: new google.maps.LatLngBounds( //results in NC are prioritized
@@ -104,9 +138,9 @@
 		<li><a href="comingsoon" class="icon icon-facebook"></a></li>
 		<li><a href="https://www.instagram.com/ncforbettergovt/" class="icon icon-instagram"></a></li>
 		<li><a href="comingsoon" class="icon icon-twitter"></a></li>
+		<li><a href="comingsoon" class="icon icon-linkedin"></a></li>
 		<li><a href="takeaction#mailinglist" class="icon icon-rss"></a></li>
 	</ul>
-
 
 	<p>Image Credit: <a href='https://commons.wikimedia.org/wiki/File:NC_Legislature.JPG'>NC General Assembly Building</a></p>
 	
