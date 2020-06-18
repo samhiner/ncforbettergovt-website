@@ -23,7 +23,7 @@
 </head>
 <body>
 <div id="logo">
-	<h1><span>NC FOR BETTER GOVERNMENT</span></h1>
+	<a href='index'><img src='images/logo.png'></a>
 </div>
 <div id="header">
 	<div id="menu" class="container">
@@ -41,49 +41,46 @@
 	<h1>How to Make a Difference</h1>
 	<p>Phone calls > Personalized emails > Template emails. You can also sign up to be a volunteer, and more regularly make phone calls. As a volunteer, if you want we will also help you coordinate meeting with your legislator on the issue and you will help spread the movement.</p>
 
-	<h1>Send an Email</h1>
+	<a name='email'><h1>Send an Email</h1></a>
 	<div>
 		<div id='districtFinder'>
 			<form autocomplete='off'><input type='text' id='address' autocomplete='off' placeholder='Address' style='width: 100%'></form>
 			<button onclick='getDistricts()'>Find Your District</button>
 		</div><br>
 		<div id='petitionTemplate'>
-			<span id='hiddenWidthSizer'></span> <!--when you type, the length of the text is measured in here to find out what the input width should be-->
-			<span id='hiddenHeightSizer'></span>
-			<p>My name is <input type='text' id='petitionName' placeholder='Your Name' onkeyup='updateSignature()' required><span class='required'>*</span> and I am a constituent of yours. <input type='text' id='petitionTitle' placeholder='Your Title' data-tip='List any positions/influence you have in your specific community. Community leaders sway legislators more.'> After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br><textarea id='petitionOtherInfo' style='width: 100%' placeholder='Why else does this strike a chord with you. Feel free to add a personal story/anecdote, but make sure to stay nice'></textarea><br> I think this needs to be addressed by our state legislature.
+			<p>Dear [State Legislator's Name],<br><br>
+
+			My name is <span id='petitionName' data-placeholder='Your Name' onkeyup='updateSignature()' contenteditable required></span><span class='required'>*</span> and I am a constituent of yours and a supporter of NC for Better Government. <span id='petitionTitle' data-placeholder='Your Title' data-tip='List any positions/influence you have in your specific community. Community leaders sway legislators more.' contenteditable></span> After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br><textarea id='petitionOtherInfo' style='width: 100%' placeholder='Why else does this strike a chord with you. Feel free to add a personal story/anecdote, but make sure to stay nice'></textarea><br> I think this needs to be addressed by our state legislature.
 
 			Should you be elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to abolish them.<br><br>
 
 			Sincerely,<br><br>
 
-			<input type='text' id='petitionSignature' placeholder='Your Name' disabled></p>
+			<span id='petitionSignature' placeholder='Your Name' disabled></span></p>
 		</div>
 		<h1>Give Them A Call</h1>
 		<div id='phoneInfo'>
 
 		</div>
+
+		<a name='join'><h1>Join Us</h1></a>
+		<div></div>
 	</div>
 </div>
 <script>
 
 	//TODO do something for what it should default to before you type and make it look better.
 
-	$(document).on('input', function() {
-		$('#petitionTemplate input').each(function(index) {
-			if ($(this).val() != '') {
-				$('#hiddenWidthSizer').text($(this).val());
-				$(this).width($('#hiddenWidthSizer').width() + 2);
-			} else {
-				$('#hiddenWidthSizer').text($(this).attr('placeholder'));
-				$(this).width($('#hiddenWidthSizer').width() + 2);
-			}
-		});
-		$('#petitionTemplate textarea')
-	});
-	$(document).trigger('input')
+	//placeholder for input parts of email form
+	//this is from https://htmldom.dev/placeholder-for-a-contenteditable-element/
+	const inputsList = document.querySelectorAll('#petitionTemplate span[contenteditable]');
+
+
+	//TODO event listener to get rid of HTML formatting
+
 
 	function updateSignature() {
-		document.getElementById('petitionSignature').value = document.getElementById('petitionName').value;
+		document.getElementById('petitionSignature').innerHTML = document.getElementById('petitionName').innerHTML;
 		$('#hiddenWidthSizer').text($('#petitionSignature').val());
 		$('#petitionSignature').width($('#hiddenWidthSizer').width() + 2);
 	}
