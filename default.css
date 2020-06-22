@@ -43,7 +43,7 @@
 	{
 		text-decoration: none;
 	}
-	
+
 	.container
 	{
 		width: 100%;
@@ -160,7 +160,117 @@
 		margin-top: -7px;
 	}
 
+	.contactForm {
+		border: 1px solid black;
+		text-align: center;
+		margin: auto;
+		width: 300px;
+		padding: 10px 10px;
+	}
 
+	.contactForm input, .contactForm textarea {
+		width: 280px;
+		max-width: 280px;
+		min-width: 280px;
+		margin-bottom: 1em;
+	}
+
+	.contactForm textarea {
+		height: 40px;
+		font-family: sans-serif;
+	}
+
+	.article a h1 {
+		color: #4E4D4D;
+	}
+
+	img[usemap], map area{
+		outline: none;
+	}
+
+	#loadingScreen {
+		display: none;
+		background-color: rgba(0, 0, 0, 0.5);
+		width: 100%;
+		height: 100%;
+		position: fixed;
+	}
+
+	#loadingWheel {
+		border: 10px solid lightgrey;
+		border-radius: 50%;
+		border-top: 10px solid black;
+		width: 150px;
+		height: 150px;
+		margin: auto;
+		margin-top: calc(50vh - 75px);
+		-webkit-animation: spin 1.5s linear infinite; /* Safari */
+		animation: spin 1.5s linear infinite;
+	}
+
+	#loadingScreen span {
+		color: white;
+		position: fixed;
+		font-size: 30px;
+		width: 100%;
+		text-align: center;
+		margin-top: calc(50vh - 10pt);
+	}
+
+	.tooltip {
+		color: #0645AD;
+	}
+
+	.tooltip:hover {
+		cursor: default;
+	}
+
+	.tooltip:hover .tooltipText {
+		display: inline-block !important;
+	}
+
+	.tooltipText {
+		display: none;
+		position: absolute;
+		margin-top: 30px;
+		color: initial;
+		background-color: #0645AD;
+		color: white;
+		padding: 10px;
+		border-radius: 5px;
+
+		line-height: 1.5;
+		text-align: left;
+		width: 20em;
+		margin-left: -10em;
+
+		font-family: sans-serif;
+		font-size: 12pt;
+	}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+
+	@media only screen and (max-width: 1024px) {
+		.article {
+			width: 80%;
+		}
+	}
+
+	@media only screen and (max-width: 768px) {
+		.article {
+			width: 90%;
+		}
+	}
 
 	@media only screen and (max-width: 640px) {
 		.article {
@@ -182,17 +292,6 @@
 		}
 	}
 
-	@media only screen and (max-width: 768px) {
-		.article {
-			width: 90%;
-		}
-	}
-
-	@media only screen and (max-width: 1024px) {
-		.article {
-			width: 80%;
-		}
-	}
 
 
 /*********************************************************************************/
@@ -263,7 +362,7 @@
 	}
 
 	#logo img {
-		height: 50pt;
+		width: 320px;
 	}
 	
 	#logo h1 a
