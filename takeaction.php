@@ -31,7 +31,6 @@ make other info letter box auto expand
 	<span>Loading</span>
 	<div id='loadingWheel'></div>
 </div>
-
 <div id="logo">
 	<map name='logo_link_map'>
 		<area shape='poly' coords='12,17,92,17,121,0,240,1,247,18,308,18,310,35,241,36,202,67,184,67,162,46,67,41,13,34' href='index'>
@@ -64,11 +63,11 @@ make other info letter box auto expand
 	<a name='email'><h1>Send an Email</h1></a>
 	<div>
 		<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
+		<div id='districtFinder'>
+			<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
+			<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
+		</div><br>
 		<form method='post' style='text-align: center;'>
-			<div id='districtFinder'>
-				<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
-				<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
-			</div><br>
 			<div id='petitionTemplate' name='petitionTemplate'>
 				<p>Dear <span id='petitionRecipients'>[State Legislator's Name]</span>,<br><br>
 
@@ -166,7 +165,7 @@ make other info letter box auto expand
 
 	//event listener that copies message to hidden input in form on submit
 	document.getElementById('sendEmail').addEventListener('click', function() {
-		if ((document.getElementById('petitionAddress').value != '' || document.getElementById('districtsHolder').value != '') && foundDistrict) {
+		if ((document.getElementById('petitionAddress').value != '') && document.getElementById('districtsHolder').value == '') { //TODO when you do manual district add them here
 			document.getElementById('addressSubmit').click();
 		}
 		document.getElementById('nameHolder').value = document.getElementById('petitionName').innerText;
@@ -189,7 +188,6 @@ make other info letter box auto expand
 
 	//TODO i should be preloading when you log in to reduce load times on address enter
 	//code taken from Google Civic Data API to get district from address
-	var foundDistrict = false;
 	function getDistricts() {
 		document.getElementById('loadingScreen').style.display = 'block';
 		gapi.client.setApiKey("AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo");
@@ -212,17 +210,9 @@ make other info letter box auto expand
 			console.log("Response", response);
 
 			if (response.result.normalizedInput.state == 'NC' && response.result.officials != undefined) {
-				const phone1 = response.result.officials[0].phones != undefined ? response.result.officials[0].phones[0] : 'Phone number not found.';
-				const phone2 = response.result.officials[1].phones != undefined ? response.result.officials[1].phones[0] : 'Phone number not found.';
-				const phoneInfo = response.result.offices[0].name + ' ' + response.result.officials[0].name + ': ' + phone1 + '<br>' + response.result.offices[1].name + ' ' + response.result.officials[1].name + ': ' + phone2
-				document.getElementById('phoneInfo').innerHTML = phoneInfo
-				document.getElementById('loadingScreen').style.display = 'none';
-				var recipients = response.result.offices[0].name.split(' ')[2] + ' ' + response.result.officials[0].name + ' and ' + response.result.offices[1].name.split(' ')[2] + ' ' + response.result.officials[1].name;
-				document.getElementById('petitionRecipients').innerText = recipients;
-
-				console.log(response.result.offices[0].divisionId.split('sldu:')[1] + ',' + response.result.offices[1].divisionId.split('sldl:')[1])
-				document.getElementById('districtsHolder').value = response.result.offices[0].divisionId.split('sldu:')[1] + ',' + response.result.offices[1].divisionId.split('sldl:')[1]
-				foundDistrict = true;
+				var stringResponse = response.body//JSON.stringify(response, null, 0).replace(/\\n/g, "\\n").replace(/\\"/g, '\\"');//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
+				document.getElementById('districtsHolder').value = stringResponse;
+				fillDistrictInfo();
 			} else if (response.result.normalizedInput.state != 'NC') {
 				alert('Please enter an address in North Carolina.');
 				document.getElementById('petitionAddress').value = '';
@@ -238,6 +228,23 @@ make other info letter box auto expand
 		});
 	}
 	gapi.load("client");
+
+	function fillDistrictInfo() {
+		console.log('Reee', document.getElementById('districtsHolder').value)
+		response = JSON.parse(document.getElementById('districtsHolder').value)
+
+		const phone1 = response.officials[0].phones != undefined ? response.officials[0].phones[0] : 'Phone number not found.';
+		const phone2 = response.officials[1].phones != undefined ? response.officials[1].phones[0] : 'Phone number not found.';
+		const phoneInfo = response.offices[0].name + ' ' + response.officials[0].name + ': ' + phone1 + '<br>' + response.offices[1].name + ' ' + response.officials[1].name + ': ' + phone2
+		document.getElementById('phoneInfo').innerHTML = phoneInfo
+		document.getElementById('loadingScreen').style.display = 'none';
+		var recipients = response.offices[0].name.split(' ')[2] + ' ' + response.officials[0].name + ' and ' + response.offices[1].name.split(' ')[2] + ' ' + response.officials[1].name;
+		document.getElementById('petitionRecipients').innerText = recipients;
+
+		const address = response.normalizedInput;
+		document.getElementById('petitionAddress').value = address.line1 + ', ' + address.city + ', ' + address.state + ' ' + address.zip;
+	}
+
 </script>
 <div id="copyright" class="container">
 	<ul class='contact'>
@@ -254,21 +261,29 @@ make other info letter box auto expand
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
 <?php
 	include('config.php');
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$rejectForm = false;
+		$errorMsg = '';
 		if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
-			echo 'You have to fill out your name to send your email. ';
+			$errorMsg = $errorMsg . 'You have to fill out your name to send your email. ';
 			$rejectForm = true;
 		}
 		if (!isset($_POST['districts']) || $_POST['districts'] == '') {
-			echo 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
+			$errorMsg = $errorMsg . 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
 			$rejectForm = true;
 		}
 		if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
-			echo "You did not click on the I'm not the robot button. Are you a robot? ";
+			$errorMsg = $errorMsg . "You did not click on the I\'m not the robot button. Are you a robot? ";
 			$rejectForm = true;
 		} else {
 			//got from https://www.kaplankomputing.com/blog/tutorials/recaptcha-php-demo-tutorial/
@@ -286,7 +301,7 @@ make other info letter box auto expand
 			$verifyCaptcha = file_get_contents($url, false, stream_context_create($options));
 			$captcha_success = json_decode($verifyCaptcha);
 			if ($captcha_success->success == false) {
-				echo "Captcha verification failed. Please try again. ";
+				$errorMsg = $errorMsg . "Captcha verification failed. Please try again. ";
 				$rejectForm = true;
 			}
 		}
@@ -295,26 +310,29 @@ make other info letter box auto expand
 		if ($rejectForm) {
 			echo "<script>
 			document.getElementById('petitionName').innerHTML = '" . $_POST['petitionName'] . "';
+			signatureUpdate();
 			document.getElementById('petitionTitle').innerHTML = '" . $_POST['petitionTitle'] . "';
 			document.getElementById('petitionHometown').innerHTML = '" . $_POST['petitionHometown'] . "';
 			document.getElementById('petitionOtherInfo').innerHTML = '" . $_POST['petitionOtherInfo'] . "';
-			document.getElementById('petitionAddress').value = '" . $_POST['petitionAddress'] . "';
-			document.getElementById('districtsHolder').value = '" . $_POST['districts'] /*this will make things easier when we have manual district selection*/. "';
+			document.getElementById('districtsHolder').value = '" . $_POST['districts'] . "';
+			fillDistrictInfo();
+			</script>";
+			echo "<script>
+			alert('" . $errorMsg . "');
 			</script>";
 		} else {
-			var_dump($_POST);
 			$name = mysqli_real_escape_string($db,$_POST['petitionName']);
 			$title = mysqli_real_escape_string($db,$_POST['petitionTitle']);
 			$otherInfo = mysqli_real_escape_string($db,$_POST['petitionOtherInfo']);
 
-			$districts = explode(',', $_POST['districts']);
-			var_dump($districts);
-			$sd = mysqli_real_escape_string($db, $districts[0]);
-			$hd = mysqli_real_escape_string($db, $districts[1]);
+			$districts = json_decode($_POST['districts'], true);
+			//TODO do validation to make sure there is an email etc
+			$sd = mysqli_real_escape_string($db, $districts['officials'][0]['emails'][0]);
+			$hd = mysqli_real_escape_string($db, $districts['officials'][1]['emails'][0]);
 			$datetime = gmdate("Y-m-d H:i:s");
 
 
-			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_district, house_district, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
+			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_email, house_email, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
 			echo $result;
 		}
 
