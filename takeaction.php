@@ -3,28 +3,6 @@
 add tooltip for community leader
 make other info letter box auto expand
 -->
-<?php
-	include('config.php');
-
-	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		var_dump($_POST);
-		$name = mysqli_real_escape_string($db,$_POST['petitionName']);
-		$title = mysqli_real_escape_string($db,$_POST['petitionTitle']);
-		$otherInfo = mysqli_real_escape_string($db,$_POST['petitionOtherInfo']);
-
-		$districts = explode(',', $_POST['districts']);
-		var_dump($districts);
-		$sd = mysqli_real_escape_string($db, $districts[0]);
-		$hd = mysqli_real_escape_string($db, $districts[1]);
-		$datetime = gmdate("Y-m-d H:i:s");
-
-		$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_district, house_district, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
-		echo $result;
-
-
-	}
-
-?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -45,6 +23,7 @@ make other info letter box auto expand
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://apis.google.com/js/api.js"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo&libraries=places"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 </head>
 <body>
@@ -85,11 +64,11 @@ make other info letter box auto expand
 	<a name='email'><h1>Send an Email</h1></a>
 	<div>
 		<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
-		<div id='districtFinder'>
-			<input type='text' id='address' autocomplete='off' placeholder='Address' style='width: 80%'><br>
-			<button onclick='getDistricts()' id='addressSubmit'>Find My District</button>
-		</div><br>
 		<form method='post' style='text-align: center;'>
+			<div id='districtFinder'>
+				<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
+				<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
+			</div><br>
 			<div id='petitionTemplate' name='petitionTemplate'>
 				<p>Dear <span id='petitionRecipients'>[State Legislator's Name]</span>,<br><br>
 
@@ -112,11 +91,15 @@ make other info letter box auto expand
 				Sincerely,<br><br>
 
 				<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span></p>
-			</div>
+			
+				<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>
+			</div><br>
+
 			<textarea name='petitionName' id='nameHolder' style='display: none;'></textarea>
 			<textarea name='petitionTitle' id='titleHolder' style='display: none;'></textarea>
 			<textarea name='petitionHometown' id='hometownHolder' style='display: none;'></textarea>
 			<input name='districts' id='districtsHolder' style='display: none;'>
+
 			<button id='sendEmail' type='button'>Send Your Email</button>
 			<input type='submit' id='verifiedSendEmail' style='display: none'>
 		</form>
@@ -165,11 +148,11 @@ make other info letter box auto expand
 		),
 		types: ['address']
 	};
-	var input = document.getElementById('address');
+	var input = document.getElementById('petitionAddress');
 	var autocomplete = new google.maps.places.Autocomplete(input, options);
 
 	//submit address if you hit enter in address box
-	var addressInput = document.getElementById('address')
+	var addressInput = document.getElementById('petitionAddress')
 	addressInput.addEventListener('keydown', function(event) {
 		if (event.keyCode === 13) {
 			document.getElementById('addressSubmit').click();
@@ -183,20 +166,13 @@ make other info letter box auto expand
 
 	//event listener that copies message to hidden input in form on submit
 	document.getElementById('sendEmail').addEventListener('click', function() {
-		const name = document.getElementById('petitionName').innerText;
-		const district = document.getElementById('districtsHolder').value;
-		if ((name != undefined && name != '') && district != '') { //They are different because petitionName is a span and districtsHolder is an input
-			document.getElementById('nameHolder').value = document.getElementById('petitionName').innerText;
-			document.getElementById('titleHolder').value = document.getElementById('petitionTitle').innerText;
-			document.getElementById('hometownHolder').value = document.getElementById('petitionHometown').innerText;
-			document.getElementById('verifiedSendEmail').click()
-		} else if ((name != undefined && name != '') && district == '') {
-			alert('You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address.');
-		} else if ((name == undefined || name == '') && district != '') {
-			alert('You have to fill out your name to send the email.');
-		} else {
-			alert('You have to fill out your name and address to send your email. We need the address to know which legislator to send your email to and we not store it.');
+		if ((document.getElementById('petitionAddress').value != '' || document.getElementById('districtsHolder').value != '') && foundDistrict) {
+			document.getElementById('addressSubmit').click();
 		}
+		document.getElementById('nameHolder').value = document.getElementById('petitionName').innerText;
+		document.getElementById('titleHolder').value = document.getElementById('petitionTitle').innerText;
+		document.getElementById('hometownHolder').value = document.getElementById('petitionHometown').innerText;
+		document.getElementById('verifiedSendEmail').click();
 	});
 
 	//update signature when you update name
@@ -213,6 +189,7 @@ make other info letter box auto expand
 
 	//TODO i should be preloading when you log in to reduce load times on address enter
 	//code taken from Google Civic Data API to get district from address
+	var foundDistrict = false;
 	function getDistricts() {
 		document.getElementById('loadingScreen').style.display = 'block';
 		gapi.client.setApiKey("AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo");
@@ -222,7 +199,7 @@ make other info letter box auto expand
 	}
 	function getDistrictsAPICall() {
 		return gapi.client.civicinfo.representatives.representativeInfoByAddress({
-			"address": document.getElementById('address').value,
+			"address": document.getElementById('petitionAddress').value,
 			"includeOffices": true,
 			"levels": [
 				"administrativeArea1"
@@ -245,9 +222,10 @@ make other info letter box auto expand
 
 				console.log(response.result.offices[0].divisionId.split('sldu:')[1] + ',' + response.result.offices[1].divisionId.split('sldl:')[1])
 				document.getElementById('districtsHolder').value = response.result.offices[0].divisionId.split('sldu:')[1] + ',' + response.result.offices[1].divisionId.split('sldl:')[1]
+				foundDistrict = true;
 			} else if (response.result.normalizedInput.state != 'NC') {
 				alert('Please enter an address in North Carolina.');
-				document.getElementById('address').value = '';
+				document.getElementById('petitionAddress').value = '';
 				document.getElementById('loadingScreen').style.display = 'none';
 			} else {
 				alert('We could not find a district for your address. Please try manually finding your district.')
@@ -276,3 +254,71 @@ make other info letter box auto expand
 </div>
 </body>
 </html>
+<?php
+	include('config.php');
+
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		$rejectForm = false;
+		if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
+			echo 'You have to fill out your name to send your email. ';
+			$rejectForm = true;
+		}
+		if (!isset($_POST['districts']) || $_POST['districts'] == '') {
+			echo 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
+			$rejectForm = true;
+		}
+		if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
+			echo "You did not click on the I'm not the robot button. Are you a robot? ";
+			$rejectForm = true;
+		} else {
+			//got from https://www.kaplankomputing.com/blog/tutorials/recaptcha-php-demo-tutorial/
+			$url = 'https://www.google.com/recaptcha/api/siteverify';
+			$data = array(
+				'secret' => '6Lci1acZAAAAACkQ6Wo6IeZ_0cmbpspYtLLqCYTZ',
+				'response' => $_POST["g-recaptcha-response"]
+			);
+			$options = array(
+				'http' => array (
+					'method' => 'POST',
+					'content' => http_build_query($data)
+				)
+			);
+			$verifyCaptcha = file_get_contents($url, false, stream_context_create($options));
+			$captcha_success = json_decode($verifyCaptcha);
+			if ($captcha_success->success == false) {
+				echo "Captcha verification failed. Please try again. ";
+				$rejectForm = true;
+			}
+		}
+
+		//TODO should I have used session? Probably. Although I only want it to store on failure. Otherwise its harder to share computer and easier to send duplicates to database that don't actually get mailed.
+		if ($rejectForm) {
+			echo "<script>
+			document.getElementById('petitionName').innerHTML = '" . $_POST['petitionName'] . "';
+			document.getElementById('petitionTitle').innerHTML = '" . $_POST['petitionTitle'] . "';
+			document.getElementById('petitionHometown').innerHTML = '" . $_POST['petitionHometown'] . "';
+			document.getElementById('petitionOtherInfo').innerHTML = '" . $_POST['petitionOtherInfo'] . "';
+			document.getElementById('petitionAddress').value = '" . $_POST['petitionAddress'] . "';
+			document.getElementById('districtsHolder').value = '" . $_POST['districts'] /*this will make things easier when we have manual district selection*/. "';
+			</script>";
+		} else {
+			var_dump($_POST);
+			$name = mysqli_real_escape_string($db,$_POST['petitionName']);
+			$title = mysqli_real_escape_string($db,$_POST['petitionTitle']);
+			$otherInfo = mysqli_real_escape_string($db,$_POST['petitionOtherInfo']);
+
+			$districts = explode(',', $_POST['districts']);
+			var_dump($districts);
+			$sd = mysqli_real_escape_string($db, $districts[0]);
+			$hd = mysqli_real_escape_string($db, $districts[1]);
+			$datetime = gmdate("Y-m-d H:i:s");
+
+
+			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_district, house_district, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
+			echo $result;
+		}
+
+
+	}
+
+?>
