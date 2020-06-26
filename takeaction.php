@@ -1,7 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
-add tooltip for community leader
 make other info letter box auto expand
+
+	//TODO if an error occurs like only partial address make sure it doesn't infinitely load
+	//TODO personalized in title
+	hometown required
+	error catching for broken sql server
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -27,9 +31,12 @@ make other info letter box auto expand
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 </head>
 <body>
-<div id='loadingScreen'>
+<div id='loadingScreen' class='popupBackground'>
 	<span>Loading</span>
 	<div id='loadingWheel'></div>
+</div>
+<div id='' class='popupBackground'>
+
 </div>
 <div id="logo">
 	<map name='logo_link_map'>
@@ -67,9 +74,9 @@ make other info letter box auto expand
 			<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
 			<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
 		</div><br>
-		<form method='post' style='text-align: center;'>
+		<form method='post' style='text-align: center;' id='writingEmail'>
 			<div id='petitionTemplate' name='petitionTemplate'>
-				<p>Dear <span id='petitionRecipients'>[State Legislator's Name]</span>,<br><br>
+				<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
 
 				My name is
 				<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
@@ -99,9 +106,24 @@ make other info letter box auto expand
 			<textarea name='petitionHometown' id='hometownHolder' style='display: none;'></textarea>
 			<input name='districts' id='districtsHolder' style='display: none;'>
 
-			<button id='sendEmail' type='button'>Send Your Email</button>
+			<button id='sendEmail' type='button'>Prep Your Email</button>
 			<input type='submit' id='verifiedSendEmail' style='display: none'>
 		</form>
+		<div id='preppedEmail'>
+				<p><b>To: </b><span>[State Legislators' Emails]</span></p>
+				<hr>
+				<p><b>Subject:</b> Please End Lame-Duck Power Grabs in North Carolina</p>
+				<hr>
+
+				<textarea id='finalEmail'>
+					
+				</textarea>
+
+				<button>Send in Default App</button>
+				<button>Send in Gmail</button>
+				<button>Send in Another Client</button>
+				<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
+		</div>
 		<h1>Give Them A Call</h1>
 		<p>Phone calls are another important part of the advocacy process. Typically, phone calls last just a few seconds and go something like this:</p>
 		<blockquote style='width: 50%; margin: auto;'>
@@ -229,6 +251,16 @@ make other info letter box auto expand
 	}
 	gapi.load("client");
 
+	function refillPetition(name, title, hometown, otherInfo, districts) {
+		document.getElementById('petitionName').innerHTML = name;
+		signatureUpdate();
+		document.getElementById('petitionTitle').innerHTML = title;
+		document.getElementById('petitionHometown').innerHTML = hometown;
+		document.getElementById('petitionOtherInfo').innerHTML = otherInfo;
+		document.getElementById('districtsHolder').value = districts;
+		fillDistrictInfo();
+	}
+
 	function fillDistrictInfo() {
 		console.log('Reee', document.getElementById('districtsHolder').value)
 		response = JSON.parse(document.getElementById('districtsHolder').value)
@@ -243,6 +275,15 @@ make other info letter box auto expand
 
 		const address = response.normalizedInput;
 		document.getElementById('petitionAddress').value = address.line1 + ', ' + address.city + ', ' + address.state + ' ' + address.zip;
+	}
+
+
+	function prepEmail(name, title, hometown, otherInfo, districts) {
+		refillPetition(name, title, hometown, otherInfo, districts)
+		//TODO hide help tags (required, question)
+		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText
+		document.getElementById('writingEmail').style.display = 'none';
+		document.getElementById('preppedEmail').style.display = 'block';
 	}
 
 </script>
@@ -308,15 +349,7 @@ make other info letter box auto expand
 
 		//TODO should I have used session? Probably. Although I only want it to store on failure. Otherwise its harder to share computer and easier to send duplicates to database that don't actually get mailed.
 		if ($rejectForm) {
-			echo "<script>
-			document.getElementById('petitionName').innerHTML = '" . $_POST['petitionName'] . "';
-			signatureUpdate();
-			document.getElementById('petitionTitle').innerHTML = '" . $_POST['petitionTitle'] . "';
-			document.getElementById('petitionHometown').innerHTML = '" . $_POST['petitionHometown'] . "';
-			document.getElementById('petitionOtherInfo').innerHTML = '" . $_POST['petitionOtherInfo'] . "';
-			document.getElementById('districtsHolder').value = '" . $_POST['districts'] . "';
-			fillDistrictInfo();
-			</script>";
+			echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', '" . $_POST['districts'] . "')</script>";
 			echo "<script>
 			alert('" . $errorMsg . "');
 			</script>";
@@ -333,7 +366,12 @@ make other info letter box auto expand
 
 
 			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_email, house_email, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
-			echo $result;
+			if ($result != 1) {
+				echo "<script>reportError('The following info was not successfully put into SQL database:' + '" . $name . "' + '" . $title . "' + '" . $otherInfo . "' + '" . $sd . "' + '" . $hd . "' + '" . $datetime . "')</script>";
+			}
+
+			echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', '" . $_POST['districts'] . "')</script>";
+
 		}
 
 

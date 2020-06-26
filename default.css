@@ -188,7 +188,7 @@
 		outline: none;
 	}
 
-	#loadingScreen {
+	.popupBackground {
 		display: none;
 		background-color: rgba(0, 0, 0, 0.5);
 		width: 100%;
@@ -248,16 +248,20 @@
 		font-size: 12pt;
 	}
 
-/* Safari */
-@-webkit-keyframes spin {
-	0% { -webkit-transform: rotate(0deg); }
-	100% { -webkit-transform: rotate(360deg); }
-}
+	/* Safari */
+	@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+	}
 
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	#preppedEmail {
+		display: none;	
+	}
 
 
 	@media only screen and (max-width: 1024px) {
