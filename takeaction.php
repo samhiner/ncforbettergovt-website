@@ -3,9 +3,13 @@
 make other info letter box auto expand
 
 	//TODO if an error occurs like only partial address make sure it doesn't infinitely load
+	//make sure to clear all district info on unsuccessful address
 	//TODO personalized in title
 	hometown required
 	error catching for broken sql server
+	make captcha not expire on prepped refresh
+	TODO turn mailtos into actual urls? aka replace " " with "%20"? Or do all browsers do this and would the "%20" then get escaped?
+		//just encode linebreaks i think
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -70,57 +74,59 @@ make other info letter box auto expand
 	<a name='email'><h1>Send an Email</h1></a>
 	<div>
 		<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
-		<div id='districtFinder'>
-			<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
-			<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
-		</div><br>
-		<form method='post' style='text-align: center;' id='writingEmail'>
-			<div id='petitionTemplate' name='petitionTemplate'>
-				<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
-
-				My name is
-				<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
-				I'm a constituent of yours from
-				<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable></span>
-				and a supporter of NC for Better Government.
-				<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
-				<sup class='tooltip' onclick='toggleToolTipText()'>
-					[?]
-					<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
-				</sup>
-				After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
-				<textarea id='petitionOtherInfo' name='petitionOtherInfo' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
-				I think this needs to be addressed by our state legislature.
-
-				Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
-
-				Sincerely,<br><br>
-
-				<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span></p>
-			
-				<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>
+		<div id='writingEmail'>
+			<div id='districtFinder'>
+				<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
+				<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
 			</div><br>
+			<form method='post' style='text-align: center;'>
+				<div id='petitionTemplate' name='petitionTemplate'>
+					<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
 
-			<textarea name='petitionName' id='nameHolder' style='display: none;'></textarea>
-			<textarea name='petitionTitle' id='titleHolder' style='display: none;'></textarea>
-			<textarea name='petitionHometown' id='hometownHolder' style='display: none;'></textarea>
-			<input name='districts' id='districtsHolder' style='display: none;'>
+					My name is
+					<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
+					I'm a constituent of yours from
+					<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable></span>
+					and a supporter of NC for Better Government.
+					<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
+					<sup class='tooltip' onclick='toggleToolTipText()'>
+						[?]
+						<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
+					</sup>
+					After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
+					<textarea id='petitionOtherInfo' name='petitionOtherInfo' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
+					<span id='otherInfoSubmitArea'></span><!--this makes it so the other info is seen in the innertext-->
+					I think this needs to be addressed by our state legislature.
 
-			<button id='sendEmail' type='button'>Prep Your Email</button>
-			<input type='submit' id='verifiedSendEmail' style='display: none'>
-		</form>
+					Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
+
+					Sincerely,<br><br>
+
+					<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span></p>
+				
+					<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>
+				</div><br>
+
+				<textarea name='petitionName' id='nameHolder' style='display: none;'></textarea>
+				<textarea name='petitionTitle' id='titleHolder' style='display: none;'></textarea>
+				<textarea name='petitionHometown' id='hometownHolder' style='display: none;'></textarea>
+				<input name='districts' id='districtsHolder' style='display: none;'>
+
+				<button id='sendEmail' type='button'>Prep Your Email</button>
+				<input type='submit' id='verifiedSendEmail' style='display: none'>
+			</form>
+		</div>
 		<div id='preppedEmail'>
-				<p><b>To: </b><span>[State Legislators' Emails]</span></p>
+				<p><b>To: </b><span id='legislatorEmailAddresses'>[State Legislators' Emails]</span></p>
 				<hr>
-				<p><b>Subject:</b> Please End Lame-Duck Power Grabs in North Carolina</p>
+				<p><b>Subject:</b> <span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span></p>
 				<hr>
 
-				<textarea id='finalEmail'>
+				<textarea id='finalEmail' style='width: 100%; max-width: 100%;' disabled>
 					
 				</textarea>
-
-				<button>Send in Default App</button>
-				<button>Send in Gmail</button>
+				<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
+				<a target='_blank' id='finalSendGmail' href='https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=email@example.com&su=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Gmail</button></a>
 				<button>Send in Another Client</button>
 				<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
 		</div>
@@ -208,34 +214,37 @@ make other info letter box auto expand
 	petitionName.addEventListener('keyup', signatureUpdate);
 	signatureUpdate()
 
-	//TODO i should be preloading when you log in to reduce load times on address enter
-	//code taken from Google Civic Data API to get district from address
 	function getDistricts() {
-		document.getElementById('loadingScreen').style.display = 'block';
-		gapi.client.setApiKey("AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo");
-		return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/civicinfo/v2/rest")
-			.then(function() { console.log("GAPI client loaded for API"); getDistrictsAPICall(); },
-				function(err) { reportError("Error loading GAPI client for API: " + JSON.stringify(err)); });
-	}
-	function getDistrictsAPICall() {
-		return gapi.client.civicinfo.representatives.representativeInfoByAddress({
-			"address": document.getElementById('petitionAddress').value,
-			"includeOffices": true,
-			"levels": [
-				"administrativeArea1"
-			],
-			"roles": [
-				"legislatorLowerBody",
-				"legislatorUpperBody"
-			]
-		}).then(function(response) {
+		var params = {
+			'key': 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo',
+			'address': document.getElementById('petitionAddress').value,
+		}
+		$.when($.getJSON('https://www.googleapis.com/civicinfo/v2/representatives', params)).then(function(response) {
 			console.log("Response", response);
 
-			if (response.result.normalizedInput.state == 'NC' && response.result.officials != undefined) {
-				var stringResponse = response.body//JSON.stringify(response, null, 0).replace(/\\n/g, "\\n").replace(/\\"/g, '\\"');//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
+			if (response.normalizedInput.state == 'NC' && response.officials != undefined) {
+				response.offices = response.offices.filter(office => {
+					return office.name == 'NC State Senator' || office.name == 'NC State Representative';
+				})
+
+				var senIndex = -1;
+				var repIndex = -1;
+				for (var x = 0; x < 2; x++) {
+					if (response.offices[x].name == 'NC State Senator') {
+						senIndex = response.offices[x].officialIndices[0];
+					} else if (response.offices[x].name == 'NC State Representative') {
+						repIndex = response.offices[x].officialIndices[0];
+					}
+				}
+
+				response.officials = [response.officials[senIndex], response.officials[repIndex]]; //NOTE this assumes that sen is before rep but thats fine tbh
+
+				console.log('Cleaned Response', response)
+
+				var stringResponse = JSON.stringify(response, null, 0)//.replace(/\'/g, "\\'");//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
 				document.getElementById('districtsHolder').value = stringResponse;
 				fillDistrictInfo();
-			} else if (response.result.normalizedInput.state != 'NC') {
+			} else if (response.normalizedInput.state != 'NC') {
 				alert('Please enter an address in North Carolina.');
 				document.getElementById('petitionAddress').value = '';
 				document.getElementById('loadingScreen').style.display = 'none';
@@ -243,13 +252,15 @@ make other info letter box auto expand
 				alert('We could not find a district for your address. Please try manually finding your district.')
 				document.getElementById('loadingScreen').style.display = 'none'
 			}
-		}, function(err) {
-			reportError("Execute error:" + JSON.stringify(err));
-			alert('An error was encountered. Please refresh and try again. If you continue to experience errors, please contact us.')
-			document.getElementById('loadingScreen').style.display = 'none';
 		});
 	}
-	gapi.load("client");
+
+	// }, function(err) {
+	// 		reportError("Execute error:" + JSON.stringify(err));
+	// 		alert('An error was encountered. Please refresh and try again. If you continue to experience errors, please contact us.')
+	// 		document.getElementById('loadingScreen').style.display = 'none';
+	// 	});
+	// }
 
 	function refillPetition(name, title, hometown, otherInfo, districts) {
 		document.getElementById('petitionName').innerHTML = name;
@@ -273,15 +284,23 @@ make other info letter box auto expand
 		var recipients = response.offices[0].name.split(' ')[2] + ' ' + response.officials[0].name + ' and ' + response.offices[1].name.split(' ')[2] + ' ' + response.officials[1].name;
 		document.getElementById('petitionRecipients').innerText = recipients;
 
+		document.getElementById('legislatorEmailAddresses').innerText = response.officials[0].emails[0] + ', ' + response.officials[1].emails[0];
+
 		const address = response.normalizedInput;
 		document.getElementById('petitionAddress').value = address.line1 + ', ' + address.city + ', ' + address.state + ' ' + address.zip;
 	}
 
 
 	function prepEmail(name, title, hometown, otherInfo, districts) {
-		refillPetition(name, title, hometown, otherInfo, districts)
+		refillPetition(name, title, hometown, otherInfo, districts); //just do this so I can grab the innertext from the petitiontemplate
+		//also that triggers filldistrictinfo which fills the "to:" section
 		//TODO hide help tags (required, question)
-		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText
+		document.getElementById('otherInfoSubmitArea').innerHTML = document.getElementById('petitionOtherInfo').value + '<br><br>';
+		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText;
+
+		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value;
+		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value;
+
 		document.getElementById('writingEmail').style.display = 'none';
 		document.getElementById('preppedEmail').style.display = 'block';
 	}
@@ -349,7 +368,7 @@ make other info letter box auto expand
 
 		//TODO should I have used session? Probably. Although I only want it to store on failure. Otherwise its harder to share computer and easier to send duplicates to database that don't actually get mailed.
 		if ($rejectForm) {
-			echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', '" . $_POST['districts'] . "')</script>";
+			echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
 			echo "<script>
 			alert('" . $errorMsg . "');
 			</script>";
@@ -370,7 +389,7 @@ make other info letter box auto expand
 				echo "<script>reportError('The following info was not successfully put into SQL database:' + '" . $name . "' + '" . $title . "' + '" . $otherInfo . "' + '" . $sd . "' + '" . $hd . "' + '" . $datetime . "')</script>";
 			}
 
-			echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', '" . $_POST['districts'] . "')</script>";
+			echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
 
 		}
 
