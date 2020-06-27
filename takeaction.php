@@ -1,16 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!--
+<?php/*
 make other info letter box auto expand
 
 	//TODO if an error occurs like only partial address make sure it doesn't infinitely load
-	//make sure to clear all district info on unsuccessful address
-	//TODO personalized in title
+	//make sure to clear ALL district info on unsuccessful address
+	//TODO put "personalized" in title
 	hometown required
 	error catching for broken sql server
 	make captcha not expire on prepped refresh
-	TODO turn mailtos into actual urls? aka replace " " with "%20"? Or do all browsers do this and would the "%20" then get escaped?
-		//just encode linebreaks i think
--->
+	make hometown auto-load
+	make reportError not put me in spam :(
+*/?>
+
+<?php
+	$googleApiKey = 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo'; //only have to change key in one place when going from dev to prod
+?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -28,9 +32,10 @@ make other info letter box auto expand
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
 	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel='icon' href='favicon.ico' type='image/x-icon'/ >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://apis.google.com/js/api.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo&libraries=places"></script>
+	<script type="text/javascript" src=<?php echo '"https://maps.googleapis.com/maps/api/js?key=' . $googleApiKey . '&libraries=places"';?>></script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 </head>
@@ -79,14 +84,14 @@ make other info letter box auto expand
 				<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
 				<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
 			</div><br>
-			<form method='post' style='text-align: center;'>
+			<form method='post' action='#email' style='text-align: center;'>
 				<div id='petitionTemplate' name='petitionTemplate'>
 					<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
 
 					My name is
 					<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
 					I'm a constituent of yours from
-					<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable></span>
+					<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable required></span><span class='required'>*</span>
 					and a supporter of NC for Better Government.
 					<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
 					<sup class='tooltip' onclick='toggleToolTipText()'>
@@ -140,7 +145,8 @@ make other info letter box auto expand
 		<span id='phoneInfo'>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</span>
 
 		<a name='join'><h1>Join Us</h1></a>
-		<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs.</p>
+		<p style='display: none;'>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs.</p>
+		<p>Volunteer section coming soon. Here, volunteers will be able to sign up. They will also be able to subscribe to our mailing list if they choose.</p>
 	</div>
 </div>
 <script>
@@ -216,7 +222,7 @@ make other info letter box auto expand
 
 	function getDistricts() {
 		var params = {
-			'key': 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo',
+			'key': <?php echo "'" . $googleApiKey . "'"; ?>,
 			'address': document.getElementById('petitionAddress').value,
 		}
 		$.when($.getJSON('https://www.googleapis.com/civicinfo/v2/representatives', params)).then(function(response) {
@@ -298,8 +304,8 @@ make other info letter box auto expand
 		document.getElementById('otherInfoSubmitArea').innerHTML = document.getElementById('petitionOtherInfo').value + '<br><br>';
 		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText;
 
-		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value;
-		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value;
+		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
 
 		document.getElementById('writingEmail').style.display = 'none';
 		document.getElementById('preppedEmail').style.display = 'block';
@@ -336,6 +342,10 @@ make other info letter box auto expand
 		$errorMsg = '';
 		if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
 			$errorMsg = $errorMsg . 'You have to fill out your name to send your email. ';
+			$rejectForm = true;
+		}
+		if (!isset($_POST['petitionHometown']) || $_POST['petitionHometown'] == '') {
+			$errorMsg = $errorMsg . 'Please add your city before you send your email. ';
 			$rejectForm = true;
 		}
 		if (!isset($_POST['districts']) || $_POST['districts'] == '') {

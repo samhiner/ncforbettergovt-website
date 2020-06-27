@@ -16,6 +16,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
 	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel='icon' href='favicon.ico' type='image/x-icon'/ >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 </head>
@@ -80,7 +81,7 @@
 	//replace this with a backend solution tbh
 	function submitContact() {
 		$.ajax({
-			url: 'https://script.google.com/macros/s/AKfycbyBeW08zpxaFHZBXJlyyXRz3ncz0aEphR6x21WwLv5-ZafdrGY/exec?msg=' + document.getElementById('contactName').value + ' - ' + document.getElementById('contactEmail').value + ' - ' + document.getElementById('contactMessage').value,
+			url: 'https://script.google.com/macros/s/AKfycbzkKkDujgd2l3PxuLsl24mCZTKib0fQzrUdrUmM_GkCnXwX3UQ/exec?msg=' + document.getElementById('contactName').value + ' - ' + document.getElementById('contactEmail').value + ' - ' + document.getElementById('contactMessage').value,
 			dataType: 'jsonp'
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			try {

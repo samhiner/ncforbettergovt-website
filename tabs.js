@@ -19,7 +19,7 @@ setTimeout(function() {
 function reportError(errorMsg) {
 	console.error(errorMsg)
 	$.ajax({
-		url: 'https://script.google.com/macros/s/AKfycbwkQIwNAxzfPmo6Awla2CgnMT4DBY9YJ6Qpi7RaCsW5XqH6x2oU/exec?error=' + errorMsg,
+		url: 'https://script.google.com/macros/s/AKfycbxyYKoysnRWeSTF7ynbncJo0kANgnatXU_ERG65-ypQv6cJHj4/exec?error=' + errorMsg,
 		dataType: 'jsonp'
 	});
 }
