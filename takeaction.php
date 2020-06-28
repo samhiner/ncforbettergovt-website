@@ -2,7 +2,6 @@
 <?php/*
 make other info letter box auto expand
 
-	//TODO if an error occurs like only partial address make sure it doesn't infinitely load
 	//make sure to clear ALL district info on unsuccessful address
 	//TODO put "personalized" in title
 	hometown required
@@ -10,8 +9,10 @@ make other info letter box auto expand
 	make captcha not expire on prepped refresh
 	make hometown auto-load
 	make reportError not put me in spam :(
-*/?>
-
+	manually find district
+	check how the letter looks when you don't put an extra comment in
+*/
+?>
 <?php
 	$googleApiKey = 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo'; //only have to change key in one place when going from dev to prod
 ?>
@@ -64,7 +65,6 @@ make other info letter box auto expand
 		</ul>
 	</div>
 </div>
-<script src='tabs.js'></script>
 <div class='article'>
 	<h1>How to Make a Difference</h1>
 	<p>The best way to cause change in government is by directly advocating to your representatives. A survey of Congressional staffers shows how much of an impact you can have by getting in touch with your elected officials:</p>
@@ -99,7 +99,7 @@ make other info letter box auto expand
 						<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
 					</sup>
 					After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
-					<textarea id='petitionOtherInfo' name='petitionOtherInfo' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
+					<textarea id='petitionOtherInfo' name='petitionOtherInfo' class='autoExpand' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
 					<span id='otherInfoSubmitArea'></span><!--this makes it so the other info is seen in the innertext-->
 					I think this needs to be addressed by our state legislature.
 
@@ -127,7 +127,7 @@ make other info letter box auto expand
 				<p><b>Subject:</b> <span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span></p>
 				<hr>
 
-				<textarea id='finalEmail' style='width: 100%; max-width: 100%;' disabled>
+				<textarea id='finalEmail' style='width: 100%; max-width: 100%;' class='autoExpand' disabled>
 					
 				</textarea>
 				<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
@@ -227,37 +227,43 @@ make other info letter box auto expand
 		}
 		$.when($.getJSON('https://www.googleapis.com/civicinfo/v2/representatives', params)).then(function(response) {
 			console.log("Response", response);
-
-			if (response.normalizedInput.state == 'NC' && response.officials != undefined) {
+			console.log(response.offices)
+			if (response.normalizedInput.state == 'NC' && response.officials != undefined && response.offices != undefined) {
 				response.offices = response.offices.filter(office => {
 					return office.name == 'NC State Senator' || office.name == 'NC State Representative';
 				})
-
-				var senIndex = -1;
-				var repIndex = -1;
-				for (var x = 0; x < 2; x++) {
-					if (response.offices[x].name == 'NC State Senator') {
-						senIndex = response.offices[x].officialIndices[0];
-					} else if (response.offices[x].name == 'NC State Representative') {
-						repIndex = response.offices[x].officialIndices[0];
+				if (response.offices.length >= 2) { //should never be over 2 but just in case 
+					var senIndex = -1;
+					var repIndex = -1;
+					for (var x = 0; x < 2; x++) {
+						if (response.offices[x].name == 'NC State Senator') {
+							senIndex = response.offices[x].officialIndices[0];
+						} else if (response.offices[x].name == 'NC State Representative') {
+							repIndex = response.offices[x].officialIndices[0];
+						}
 					}
+
+					response.officials = [response.officials[senIndex], response.officials[repIndex]]; //NOTE this assumes that sen is before rep but thats fine tbh
+
+					console.log('Cleaned Response', response)
+
+					var stringResponse = JSON.stringify(response, null, 0)//.replace(/\'/g, "\\'");//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
+					document.getElementById('districtsHolder').value = stringResponse;
+					fillDistrictInfo();
+				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
+					alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+					document.getElementById('petitionAddress').value = '';
 				}
-
-				response.officials = [response.officials[senIndex], response.officials[repIndex]]; //NOTE this assumes that sen is before rep but thats fine tbh
-
-				console.log('Cleaned Response', response)
-
-				var stringResponse = JSON.stringify(response, null, 0)//.replace(/\'/g, "\\'");//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
-				document.getElementById('districtsHolder').value = stringResponse;
-				fillDistrictInfo();
 			} else if (response.normalizedInput.state != 'NC') {
 				alert('Please enter an address in North Carolina.');
 				document.getElementById('petitionAddress').value = '';
-				document.getElementById('loadingScreen').style.display = 'none';
-			} else {
-				alert('We could not find a district for your address. Please try manually finding your district.')
-				document.getElementById('loadingScreen').style.display = 'none'
+			} else { //is an address that google recognizes but google does not have any district data for it
+				alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+				document.getElementById('petitionAddress').value = '';
 			}
+		}).fail(function() { //is not an address that google recognizes
+			alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+			document.getElementById('petitionAddress').value = '';
 		});
 	}
 
@@ -324,15 +330,6 @@ make other info letter box auto expand
 	
 	<p>Adapted from <a href='https://templated.co/swarming'>Swarming</a> by <a href="https://templated.co" rel="nofollow">TEMPLATED</a> | Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
 </div>
-</body>
-</html>
-
-
-
-
-
-
-
 <?php
 	include('config.php');
 
@@ -406,3 +403,6 @@ make other info letter box auto expand
 	}
 
 ?>
+<script src='tabs.js'></script>
+</body>
+</html>
