@@ -321,7 +321,6 @@ make other info letter box auto expand
 		<li><a href="takeaction#mailinglist" class="icon icon-rss"></a></li>
 	</ul>
 
-	<p>Image Credit: <a href='https://commons.wikimedia.org/wiki/File:NC_Legislature.JPG'>NC General Assembly Building</a></p>
 	
 	<p>Adapted from <a href='https://templated.co/swarming'>Swarming</a> by <a href="https://templated.co" rel="nofollow">TEMPLATED</a> | Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
 </div>
@@ -396,7 +395,7 @@ make other info letter box auto expand
 
 			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_email, house_email, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
 			if ($result != 1) {
-				echo "<script>reportError('The following info was not successfully put into SQL database:' + '" . $name . "' + '" . $title . "' + '" . $otherInfo . "' + '" . $sd . "' + '" . $hd . "' + '" . $datetime . "')</script>";
+				echo "<script>reportError('The following info was not successfully put into SQL database: " . $_POST['petitionName'] . " - " . $_POST['petitionTitle'] . " - " . $_POST['petitionOtherInfo'] . " - " . $districts['officials'][0]['emails'][0] . " - " . $districts['officials'][1]['emails'][0] . " - " . $datetime . "')</script>";
 			}
 
 			echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
