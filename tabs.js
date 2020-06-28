@@ -1,3 +1,5 @@
+//this file executes right after the tabs are loaded in the HTML
+
 //this hovers over all tabs at the start
 //bc it jumps a bit the first time you hover
 var tabs = document.getElementById('menu').children[0].children;
@@ -24,17 +26,3 @@ function reportError(errorMsg) {
 	});
 }
 
-//make textareas grow as you type
-const tx = document.getElementsByClassName('autoExpand');
-console.log(tx)
-for (let i = 0; i < tx.length; i++) {
-	console.log(tx[i])
-	tx[i].style.height = (tx[i].scrollHeight) + 'px';
-	tx[i].style.overflowY = 'hidden';
-	tx[i].addEventListener("input", OnInput, false);
-}
-
-function OnInput() {
-  this.style.height = 'auto';
-  this.style.height = (this.scrollHeight) + 'px';
-}

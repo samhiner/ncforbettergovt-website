@@ -65,6 +65,7 @@ make other info letter box auto expand
 		</ul>
 	</div>
 </div>
+<script src='tabs.js'></script>
 <div class='article'>
 	<h1>How to Make a Difference</h1>
 	<p>The best way to cause change in government is by directly advocating to your representatives. A survey of Congressional staffers shows how much of an impact you can have by getting in touch with your elected officials:</p>
@@ -403,6 +404,6 @@ make other info letter box auto expand
 	}
 
 ?>
-<script src='tabs.js'></script>
+<script src='postload.js'></script>
 </body>
 </html>
