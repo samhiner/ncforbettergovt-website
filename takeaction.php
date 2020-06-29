@@ -2,16 +2,14 @@
 <?php/*
 make other info letter box auto expand
 
-	//make sure to clear ALL district info on unsuccessful address
 	//TODO put "personalized" in title
 	make captcha not expire on prepped refresh
-	make hometown auto-load
 	manually find district
 	check how the letter looks when you don't put an extra comment in
 	//ty popup says Sign up for our montlhly mailing list to get a reminder to get in touch with your representatives again and to learn about more ways to get involved. Or get even more involved as a volunteer?
-	//secure recaptchas
 	//add mailing list signup to more places around the site... all pages
 	footer links
+	drop down on take action and popups on website
 */
 ?>
 <?php
@@ -53,7 +51,7 @@ make other info letter box auto expand
 	<map name='logo_link_map'>
 		<area shape='poly' coords='12,17,92,17,121,0,240,1,247,18,308,18,310,35,241,36,202,67,184,67,162,46,67,41,13,34' href='index'>
 	</map>
-	<img src='images/logo.png' usemap='#logo_link_map'>
+	<img src='images/logo.png' usemap='#logo_link_map' alt='NC for Better Government'>
 </div>
 <div id="header">
 	<div id="menu" class="container">
@@ -148,7 +146,7 @@ make other info letter box auto expand
 
 		<a name='join'><h1>Join Us</h1></a>
 		<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
-		<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our monthly mailing list.</p>
+		<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
 	</div>
 </div>
 <script>
@@ -254,18 +252,18 @@ make other info letter box auto expand
 					fillDistrictInfo();
 				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
 					alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
-					document.getElementById('petitionAddress').value = '';
+					clearDistrictInfo();
 				}
 			} else if (response.normalizedInput.state != 'NC') {
 				alert('Please enter an address in North Carolina.');
-				document.getElementById('petitionAddress').value = '';
+				clearDistrictInfo();
 			} else { //is an address that google recognizes but google does not have any district data for it
 				alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
-				document.getElementById('petitionAddress').value = '';
+				clearDistrictInfo();
 			}
 		}).fail(function() { //is not an address that google recognizes
 			alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
-			document.getElementById('petitionAddress').value = '';
+			clearDistrictInfo();
 		});
 	}
 
@@ -287,14 +285,13 @@ make other info letter box auto expand
 	}
 
 	function fillDistrictInfo() {
-		console.log('Reee', document.getElementById('districtsHolder').value)
 		response = JSON.parse(document.getElementById('districtsHolder').value)
 
 		const phone1 = response.officials[0].phones != undefined ? response.officials[0].phones[0] : 'Phone number not found.';
 		const phone2 = response.officials[1].phones != undefined ? response.officials[1].phones[0] : 'Phone number not found.';
 		const phoneInfo = response.offices[0].name + ' ' + response.officials[0].name + ': ' + phone1 + '<br>' + response.offices[1].name + ' ' + response.officials[1].name + ': ' + phone2
 		document.getElementById('phoneInfo').innerHTML = phoneInfo
-		document.getElementById('loadingScreen').style.display = 'none';
+		//document.getElementById('loadingScreen').style.display = 'none';
 		var recipients = response.offices[0].name.split(' ')[2] + ' ' + response.officials[0].name + ' and ' + response.offices[1].name.split(' ')[2] + ' ' + response.officials[1].name;
 		document.getElementById('petitionRecipients').innerText = recipients;
 
@@ -302,6 +299,15 @@ make other info letter box auto expand
 
 		const address = response.normalizedInput;
 		document.getElementById('petitionAddress').value = address.line1 + ', ' + address.city + ', ' + address.state + ' ' + address.zip;
+		document.getElementById('petitionHometown').innerText = address.city;
+	}
+
+	function clearDistrictInfo() {
+		document.getElementById('phoneInfo').innerHTML = 'Once you fill out your district, the phone numbers for your legislators\' offices will show up here.'
+		document.getElementById('petitionRecipients').innerText = '[State Legislators\' Names]';
+		document.getElementById('legislatorEmailAddresses').innerText = '[State Legislators\' Emails]';
+		document.getElementById('petitionAddress').value = '';
+		document.getElementById('petitionHometown').innerText = '';
 	}
 
 

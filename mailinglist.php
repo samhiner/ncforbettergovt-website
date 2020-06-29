@@ -36,7 +36,7 @@
 	<map name='logo_link_map'>
 		<area shape='poly' coords='12,17,92,17,121,0,240,1,247,18,308,18,310,35,241,36,202,67,184,67,162,46,67,41,13,34' href='index'>
 	</map>
-	<img src='images/logo.png' usemap='#logo_link_map'>
+	<img src='images/logo.png' usemap='#logo_link_map' alt='NC for Better Government'>
 </div>
 <div id="header">
 	<div id="menu" class="container">
