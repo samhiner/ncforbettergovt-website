@@ -4,13 +4,12 @@ make other info letter box auto expand
 
 	//make sure to clear ALL district info on unsuccessful address
 	//TODO put "personalized" in title
-	hometown required
-	error catching for broken sql server
 	make captcha not expire on prepped refresh
 	make hometown auto-load
-	make reportError not put me in spam :(
 	manually find district
 	check how the letter looks when you don't put an extra comment in
+	//ty popup says Sign up for our montlhly mailing list to get a reminder to get in touch with your representatives again and to learn about more ways to get involved. Or get even more involved as a volunteer?
+	//secure recaptchas
 */
 ?>
 <?php
@@ -146,8 +145,7 @@ make other info letter box auto expand
 		<span id='phoneInfo'>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</span>
 
 		<a name='join'><h1>Join Us</h1></a>
-		<p style='display: none;'>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs.</p>
-		<p>Volunteer section coming soon. Here, volunteers will be able to sign up. They will also be able to subscribe to our mailing list if they choose.</p>
+		<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
 	</div>
 </div>
 <script>
@@ -334,7 +332,7 @@ make other info letter box auto expand
 <?php
 	include('config.php');
 
-	if($_SERVER["REQUEST_METHOD"] == "POST") {
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$rejectForm = false;
 		$errorMsg = '';
 		if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {

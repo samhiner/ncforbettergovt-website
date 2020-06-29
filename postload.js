@@ -2,9 +2,7 @@
 
 //make textareas grow as you type
 const tx = document.getElementsByClassName('autoExpand');
-console.log(tx)
 for (let i = 0; i < tx.length; i++) {
-	console.log(tx[i])
 	tx[i].style.height = (tx[i].scrollHeight) + 'px';
 	tx[i].style.overflowY = 'hidden';
 	tx[i].addEventListener("input", OnInput, false);
