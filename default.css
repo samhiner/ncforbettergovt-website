@@ -248,6 +248,26 @@
 		font-size: 12pt;
 	}
 
+	.mailingListInput {
+		width: 70%;
+		padding: 12px 20px;
+		box-sizing: border-box;
+	}
+
+	.mailingListButton {
+		padding: 12px 20px;
+		border-radius: 5px;
+		border: solid 1px black;
+		background-color: #8fc3e8;
+		color: white;
+		font-weight: bold;
+		letter-spacing: 1px;
+	}
+
+	.mailingListButton:hover {
+		background-color: #7bafd4;
+	}
+
 	/* Safari */
 	@-webkit-keyframes spin {
 		0% { -webkit-transform: rotate(0deg); }

@@ -10,6 +10,8 @@ make other info letter box auto expand
 	check how the letter looks when you don't put an extra comment in
 	//ty popup says Sign up for our montlhly mailing list to get a reminder to get in touch with your representatives again and to learn about more ways to get involved. Or get even more involved as a volunteer?
 	//secure recaptchas
+	//add mailing list signup to more places around the site... all pages
+	footer links
 */
 ?>
 <?php
@@ -146,6 +148,7 @@ make other info letter box auto expand
 
 		<a name='join'><h1>Join Us</h1></a>
 		<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
+		<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our monthly mailing list.</p>
 	</div>
 </div>
 <script>

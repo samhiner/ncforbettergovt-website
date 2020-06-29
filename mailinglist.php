@@ -11,7 +11,7 @@
 	 	gtag('config', 'UA-168970691-1');
 	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Donate | NC for Better Government</title>
+	<title>Mailing List | NC for Better Government</title>
 	<meta name="description" content="We are a non-partisan group of passionate volunteers who are advocating for good government policies in the North Carolina State Government through direct advocacy and informing communities." />
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
@@ -19,6 +19,17 @@
 	<link rel='icon' href='favicon.ico' type='image/x-icon'/ >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+	<!-- MailerLite Universal -->
+	<script>
+	(function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+	var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+	f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+	var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+	_.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+
+	var ml_account = ml('accounts', '2120814', 's1d0e3v1v3', 'load');
+	</script>
+	<!-- End MailerLite Universal -->
 </head>
 <body>
 <div id="logo">
@@ -34,16 +45,19 @@
 			<li><a href="issues" id='test'>Issues</a></li>
 			<li><a href="takeaction">Take Action</a></li> <!--style='border: 2px solid #1f4a82; border-radius: 5px; background-color: #d6d6d6;'-->
 			<li><a href="about">About Us</a></li>
-			<li class="current_page_item"><a href="donate">Donate</a></li>
+			<li><a href="donate">Donate</a></li>
 		</ul>
 	</div>
 </div>
 <script src='tabs.js'></script>
 <div class='article'>
-	<p style='text-align: center;'>All donations go directly toward maintaining this website and covering other costs that are incurred in advertising our cause to people around North Carolina. A financial report will be published every quarter detailing our budget.</p>
-</div>
-<div style='text-align: center;'>
-	<iframe src="https://givebutter.com/embed/c/x0xz03" width="100%" height="615px" style="max-width: 601px;" name="givebutter" frameborder="0" scrolling="no" seamless allowpaymentrequest></iframe><script src="https://givebutter.com/js/widget.js"></script>
+	<h1>Sign Up for Our Mailing List</h1>
+	<p>We will send you an email once a month to remind you to get in touch with your representatives again and to inform you about more ways you can spread the cause.</p>
+
+	<div class="ml-form-embed"
+		data-account="2120814:s1d0e3v1v3"
+		data-form="2267455:q2b7g5">
+	</div>
 </div>
 <div id="copyright" class="container">
 	<ul class='contact'>
