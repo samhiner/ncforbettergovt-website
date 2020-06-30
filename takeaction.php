@@ -38,6 +38,17 @@ make other info letter box auto expand
 	<script type="text/javascript" src=<?php echo '"https://maps.googleapis.com/maps/api/js?key=' . $googleApiKey . '&libraries=places"';?>></script>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+	<!-- MailerLite Universal -->
+	<script>
+	(function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+	var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+	f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+	var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+	_.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+
+	var ml_account = ml('accounts', '2120814', 's1d0e3v1v3', 'load');
+	</script>
+	<!-- End MailerLite Universal -->
 </head>
 <body>
 <div id='loadingScreen' class='popupBackground'>
@@ -316,7 +327,9 @@ make other info letter box auto expand
 		//also that triggers filldistrictinfo which fills the "to:" section
 		//TODO hide help tags (required, question)
 		document.getElementById('otherInfoSubmitArea').innerHTML = document.getElementById('petitionOtherInfo').value + '<br><br>';
+		$('.tooltip,.required').css('display', 'none');
 		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText;
+		$('.tooltip,.required').css ('display', 'inline');
 
 		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
 		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
