@@ -18,8 +18,18 @@
 	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 	<link rel='icon' href='favicon.ico' type='image/x-icon'/ >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+	<!-- MailerLite Universal -->
+	<script>
+	(function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+	var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+	f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+	var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+	_.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+
+	var ml_account = ml('accounts', '2120814', 's1d0e3v1v3', 'load');
+	</script>
+	<!-- End MailerLite Universal -->
 </head>
 <body>
 <div id="logo">
@@ -32,10 +42,10 @@
 	<div id="menu" class="container">
 		<ul>
 			<li><a href="index">Home</a></li>
-			<li><a href="issues" id='test'>Issues</a></li>
+			<li><a href="issues">Our Issues</a></li>
 			<li><a href="takeaction">Take Action</a></li> <!--style='border: 2px solid #1f4a82; border-radius: 5px; background-color: #d6d6d6;'-->
-			<li><a href="about">About Us</a></li>
-			<li><a href="donate">Donate</a></li>
+			<li><a href="about">About</a></li>
+			<li class="current_page_item"><a href="volunteer">Volunteer</a></li>
 		</ul>
 	</div>
 </div>
@@ -43,29 +53,33 @@
 <div class='article'>
 	<h1>Volunteer Information</h1>
 	<b>Volunteer Opportunities:</b>
+	<p>Volunteers are the most important part of NC for Better Government. As a constituent in NC, your legislators will listen to you if you make your voice heard. Volunteers for NC for Better Government advocate to their state legislators through meetings, phone calls, social media, and attending events. Volunteers also spread the cause by getting more people to call their legislators and advertising the cause through different outlets.</p>
+	<b>Benefits:</b>
 	<ul>
-		<li>Learn how to get a meeting with your legislator.</li>
-		<li>Learn how to effectively influence elected officials.</li>
+		<li>Learn to effectively communicate the importance of ending <a href='issues'>lame-duck power grabs</a>.</li>
+		<li>Create long-lasting connections with state legislators.</li>
+		<li>Learn how to influence elected officials.</li>
 		<li>Join a community of people interested in politics and activism in North Carolina.</li>
+		<li>Have a real positive impact on government in North Carolina.</li>
 	</ul>
 	<b>Volunteer Responsibilities:</b>
 	<ul>
-		<li>Meet with your legislator (virtually or in-person) to discuss lame-duck power grabs.</li>
-		<li>Get 20 people to send an email to their legislator on the NC for Better Government website each month.</li>
-		<li>Email and call your representative to advocate for ending lame-duck power grabs every month.</li>
-		<li>Share information about NC for Better Government on social media (if applicable).</li>
+		<li>Meet with your state legislator to discuss lame-duck power grabs and attend their (virtual or physical) campaign events.</li>
+		<li>Get 20 people to call (or email) each month.</li>
+		<li>Email and call your state legislators once each month.</li>
 	</ul>
-
-	<a name='join'><h1>Become a Volunteer</h1></a>
-	<p>Thank you for your interest in volunteering with us! To continue, send an email to the email address below stating your interest in volunteering. We will get back to you to schedule an interview to talk more about the details of the volunteer role and to make sure you are a good fit.</p>
-	<button id='showEmailVerifyButton' onclick='showEmailVerify()'>View Email Address</button>
-	<form method='post' action='#join' id='volunteerEmailVerify' style='display: none;'>
-		<div class='g-recaptcha' data-sitekey='6LeVz6oZAAAAAAi4ASeZeOQskZzLODv2Ot3dHJ-b'></div>
-		<input type='submit'>
-	</form>
-	<span id='volunteerEmail'></span>
-
+	<b>Other specific things you will be doing as a volunteer include:</b>
+	<ul>
+		<li>Attend virtual or physical events that your state legislator holds.</li>
+		<li>Communicate with their legislator via social media</li>
+		<li>Communicate with community leaders to get their support of NC for Better Government</li>
+		<li>Find other ways to market NC for Better Government, such as through traditional media or attending events.</li>
+	</ul>
+	<h1>Join Us</h1>
+	<p>Thank you for your interest in volunteering with us! To continue, please fill out the form below. We will get back to you within 48 hours to schedule a phone call to talk more about your role in NC for Better Government.</p>
+	<div style='text-align: center;'><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSda8Ke7cFIc7ZJ84Rva88Zlk8PetzCt7sk-hh7-snn2rWD3Ug/viewform?embedded=true" width="640" height="850" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe></div>
 </div>
+
 <div id="copyright" class="container">
 	<ul class='contact'>
 		<li><a href="comingsoon" class="icon icon-facebook"></a></li>
@@ -78,39 +92,6 @@
 	
 	<p>Adapted from <a href='https://templated.co/swarming'>Swarming</a> by <a href="http://templated.co" rel="nofollow">TEMPLATED</a> | Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
 </div>
-<script>
-	function showEmailVerify() {
-		document.getElementById('showEmailVerifyButton').style.display = 'none';
-		document.getElementById('volunteerEmailVerify').style.display = 'block';
-	}
-</script>
 <script src='postload.js'></script>
 </body>
 </html>
-<?php
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
-			echo "<script>alert('You did not click on the I\'m not the robot button. Are you a robot?')</script>";
-		} else {
-			//got from https://www.kaplankomputing.com/blog/tutorials/recaptcha-php-demo-tutorial/
-			$url = 'https://www.google.com/recaptcha/api/siteverify';
-			$data = array(
-				'secret' => '6LeVz6oZAAAAAKJWhvPCf0Au5A_73tzyjA5X2dpQ',
-				'response' => $_POST["g-recaptcha-response"]
-			);
-			$options = array(
-				'http' => array (
-					'method' => 'POST',
-					'content' => http_build_query($data)
-				)
-			);
-			$verifyCaptcha = file_get_contents($url, false, stream_context_create($options));
-			$captcha_success = json_decode($verifyCaptcha);
-			if ($captcha_success->success == false) {
-				echo "<script>alert('Captcha verification failed. Please try again.')</script>";
-			} else {
-				echo '<script>document.getElementById("volunteerEmail").innerHTML = "Send your email to this address: <a href=\'mailto:sam@ncforbettergovt.org\'>sam@ncforbettergovt.org</a>"; document.getElementById("showEmailVerifyButton").style.display = "none";</script>';
-			}
-		}
-	}
-?>

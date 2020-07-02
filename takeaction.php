@@ -68,33 +68,37 @@ make other info letter box auto expand
 	<div id="menu" class="container">
 		<ul>
 			<li><a href="index">Home</a></li>
-			<li><a href="issues" id='test'>Issues</a></li>
+			<li><a href="issues">Our Issues</a></li>
 			<li class="current_page_item"><a href="takeaction">Take Action</a></li> <!--style='border: 2px solid #1f4a82; border-radius: 5px; background-color: #d6d6d6;'-->
-			<li><a href="about">About Us</a></li>
-			<li><a href="donate">Donate</a></li>
+			<li><a href="about">About</a></li>
+			<li><a href="volunteer">Volunteer</a></li>
 		</ul>
 	</div>
 </div>
 <script src='tabs.js'></script>
 <div class='article'>
 	<h1>How to Make a Difference</h1>
-	<p>The best way to cause change in government is by directly advocating to your representatives. A survey of Congressional staffers shows how much of an impact you can have by getting in touch with your elected officials:</p>
-	<div style='text-align: center;'>
-		<figure style='text-align: center; display: inline-block; margin: 0; margin-bottom: 10px;'>
-			<img style='height: 17em; border: solid 1px black' src='images/influence_stats.png' alt='A survey of congressional staffers shows that 99% of congresspeople are influenced by meetings, 94% are influenced by personalized emails, 88% are influenced by phone calls, and 63% are influenced by template emails.'>
-			<figcaption style='text-align: right; font-size: 10pt;'>Data from the <a href='https://www.congressfoundation.org/index.php'>Congressional Management Foundation</a></figcaption>
-		</figure>
+	<p>The best way to cause change in government is by directly advocating to your representatives. Take a few minutes to call your legislators (or send an email if you can't call). Getting in touch with your legislators can have a huge impact on ending lame-duck power grabs in NC.</p> 
+	<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
+	<div id='districtFinder'>
+		<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
+		<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
 	</div>
-	<p>The influence you can have is even greater at the state level. Take a few minutes to personalize and send an email and/or call your legislators offices. Getting in touch with your legislators can have a huge impact on ending lame-duck power grabs in NC.</p> 
+
+	<h1>Call Your Legislators</h1>
+		<p>Phone calls are the most effective way you can advocate to your legislators. Phone calls are entirely customizable, and can last just a few seconds and go something like this:</p>
+		<blockquote style='width: 50%; margin: auto;'>
+			<b>Them:</b> Hello, Senator Smith's Office.<br>
+			<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
+			<b>Them:</b> Thank you, we will make a note of it.
+		</blockquote><br>
+		<p>You can also have a longer phone call and even speak with your legislator to have your specific thoughts on the issues heard.</p>
+		<span id='phoneInfo' style='font-weight: bold;'><i>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</i></span>
 
 	<a name='email'><h1>Send an Email</h1></a>
+	<p>If you can't call, personalized emails are another way to get in touch with your legislators. Make sure to find your district using the address tool above so we know which legislator to direct your email to.</p>
 	<div>
-		<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
 		<div id='writingEmail'>
-			<div id='districtFinder'>
-				<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
-				<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
-			</div><br>
 			<form method='post' action='#email' style='text-align: center;'>
 				<div id='petitionTemplate' name='petitionTemplate'>
 					<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
@@ -146,18 +150,16 @@ make other info letter box auto expand
 				<button>Send in Another Client</button>
 				<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
 		</div>
-		<h1>Give Them A Call</h1>
-		<p>Phone calls are another important part of the advocacy process. Typically, phone calls last just a few seconds and go something like this:</p>
-		<blockquote style='width: 50%; margin: auto;'>
-			<b>Them:</b> Hello, Senator Smith's Office.<br>
-			<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
-			<b>Them:</b> Thank you, we will make a note of it.
-		</blockquote><br>
-		<span id='phoneInfo'>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</span>
+	</div>
 
-		<a name='join'><h1>Join Us</h1></a>
-		<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
-		<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
+	<a name='join'><h1>Join Us</h1></a>
+	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
+	<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
+
+	<a name='donate'><h1>Donate</h1></a>
+	<p>All donations go directly toward maintaining this website and covering other costs that are incurred in advertising our cause to people around North Carolina. A financial report will be published every quarter detailing our budget.</p>
+	<div style='text-align: center;'>
+		<iframe src="https://givebutter.com/embed/c/x0xz03" width="100%" height="615px" style="max-width: 601px;" name="givebutter" frameborder="0" scrolling="no" seamless allowpaymentrequest></iframe><script src="https://givebutter.com/js/widget.js"></script>
 	</div>
 </div>
 <script>
@@ -300,7 +302,7 @@ make other info letter box auto expand
 
 		const phone1 = response.officials[0].phones != undefined ? response.officials[0].phones[0] : 'Phone number not found.';
 		const phone2 = response.officials[1].phones != undefined ? response.officials[1].phones[0] : 'Phone number not found.';
-		const phoneInfo = response.offices[0].name + ' ' + response.officials[0].name + ': ' + phone1 + '<br>' + response.offices[1].name + ' ' + response.officials[1].name + ': ' + phone2
+		const phoneInfo = response.offices[0].name + ' ' + response.officials[0].name + ': <a href="tel:' + phone1 + '">' + phone1 + '</a><br>' + response.offices[1].name + ' ' + response.officials[1].name + ': <a href="tel:' + phone2 + '">' + phone2 + '</a>'
 		document.getElementById('phoneInfo').innerHTML = phoneInfo
 		//document.getElementById('loadingScreen').style.display = 'none';
 		var recipients = response.offices[0].name.split(' ')[2] + ' ' + response.officials[0].name + ' and ' + response.offices[1].name.split(' ')[2] + ' ' + response.officials[1].name;
@@ -330,6 +332,10 @@ make other info letter box auto expand
 		$('.tooltip,.required').css('display', 'none');
 		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText;
 		$('.tooltip,.required').css ('display', 'inline');
+
+		if (document.getElementById('petitionOtherInfo').value != '') {
+			document.getElementById('legislatorEmailSubject').innerText = 'Personalized Email - Please End Lame-Duck Power Grabs in North Carolina'
+		}
 
 		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
 		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');

@@ -42,10 +42,10 @@
 	<div id="menu" class="container">
 		<ul>
 			<li><a href="index">Home</a></li>
-			<li><a href="issues" id='test'>Issues</a></li>
+			<li><a href="issues">Our Issues</a></li>
 			<li><a href="takeaction">Take Action</a></li> <!--style='border: 2px solid #1f4a82; border-radius: 5px; background-color: #d6d6d6;'-->
-			<li><a href="about">About Us</a></li>
-			<li><a href="donate">Donate</a></li>
+			<li><a href="about">About</a></li>
+			<li><a href="volunteer">Volunteer</a></li>
 		</ul>
 	</div>
 </div>
