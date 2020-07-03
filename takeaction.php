@@ -28,7 +28,8 @@ make other info letter box auto expand
 	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Take Action | NC for Better Government</title>
-	<meta name="description" content="We are a non-partisan group of passionate volunteers who are advocating for good government policies in the North Carolina State Government through direct advocacy and informing communities." />
+	<meta name="description" content="The best way to cause change in government is by directly advocating to your representatives. Take a few minutes to call your legislators about ending lame-duck power grabs in NC." />
+	<meta name='keywords' content='nc for better government,government,lame-duck power grabs,north carolina'>
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
 	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
@@ -156,11 +157,11 @@ make other info letter box auto expand
 	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
 	<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
 
-	<a name='donate'><h1>Donate</h1></a>
+	<!--<a name='donate'><h1>Donate</h1></a>
 	<p>All donations go directly toward maintaining this website and covering other costs that are incurred in advertising our cause to people around North Carolina. A financial report will be published every quarter detailing our budget.</p>
 	<div style='text-align: center;'>
 		<iframe src="https://givebutter.com/embed/c/x0xz03" width="100%" height="615px" style="max-width: 601px;" name="givebutter" frameborder="0" scrolling="no" seamless allowpaymentrequest></iframe><script src="https://givebutter.com/js/widget.js"></script>
-	</div>
+	</div>-->
 </div>
 <script>
 	//placeholder for input parts of email form
