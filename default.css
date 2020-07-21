@@ -283,6 +283,33 @@
 		display: none;	
 	}
 
+	.volunteerList {
+		background-color: lightgray;
+		width: 100%;
+		height: 500px;
+		padding: 10px;
+		overflow-y: scroll;
+	}
+
+	.volunteerList div {
+		height: 170px;
+		background-color: white;
+		margin-bottom: 10px;
+	}
+
+	.volunteerList img {
+		width: 150px;
+		height: 150px;
+		float: left;
+		margin: 10px;
+	}
+
+	.volunteerName {
+		font-size: 30pt;
+		font-weight: bold;
+		color: black;
+		margin: 0;
+	}
 
 	@media only screen and (max-width: 1024px) {
 		.article {
