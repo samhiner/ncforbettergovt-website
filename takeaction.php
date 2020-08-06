@@ -56,9 +56,10 @@ make other info letter box auto expand
 	<span>Loading</span>
 	<div id='loadingWheel'></div>
 </div>
-<div id='' class='popupBackground'>
-
+<div id='generalPopupBackground' class='popupBackground' onclick='hidePopup()'>
+	<span id='popupInfo' onclick='hidePopup()'></span>
 </div>
+
 <div id="logo">
 	<map name='logo_link_map'>
 		<area shape='poly' coords='12,17,92,17,121,0,240,1,247,18,308,18,310,35,241,36,202,67,184,67,162,46,67,41,13,34' href='index'>
@@ -86,15 +87,25 @@ make other info letter box auto expand
 		<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
 	</div>
 
-	<h1>Call Your Legislators</h1>
-		<p>Phone calls are the most effective way you can advocate to your legislators. Phone calls are entirely customizable, and can last just a few seconds and go something like this:</p>
-		<blockquote style='width: 50%; margin: auto;'>
-			<b>Them:</b> Hello, Senator Smith's Office.<br>
-			<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
-			<b>Them:</b> Thank you, we will make a note of it.
-		</blockquote><br>
-		<p>You can also have a longer phone call and even speak with your legislator to have your specific thoughts on the issues heard.</p>
-		<span id='phoneInfo' style='font-weight: bold;'><i>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</i></span>
+	<a name='call'><h1>Call Your Legislators</h1></a>
+	<p>Phone calls are the most effective way you can advocate to your legislators. Phone calls are entirely customizable, and can last just a few seconds and go something like this:</p>
+	<blockquote style='width: 50%; margin: auto;'>
+		<b>Them:</b> Hello, Senator Smith's Office.<br>
+		<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
+		<b>Them:</b> Thank you, we will make a note of it.
+	</blockquote><br>
+	<p>You can also have a longer phone call and even speak with your legislator to have your specific thoughts on the issues heard.</p>
+	<span id='phoneInfo' style='font-weight: bold;'><i>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</i></span>
+	<br><br>
+	<button id='callReporting' style='display: none; margin: auto;' onclick='showCallReportForm()'><b>Called Your Legislator? Let Us Know!</b></button>
+	<form method='post' action='#call' id='callReportForm' style='display: none; border: 1px solid black; font-family: sans-serif; padding: 10px;'>
+		Please take a second to tell us which legislator's office you called and how the call went. This helps us keep track of how many legislators are hearing about ending lame-duck power grabs. <br><br>
+		<div style='text-align: center;'>
+			<input name='callerName' type='text' placeholder='Your Name' style='margin-bottom: 10px'>
+			<input name='callDetails' type='text' placeholder='Call Details' style='width: calc(100% - 10px); margin-bottom: 10px;'><br>
+			<input type='submit' name='submitCallDetails'>
+		</div>
+	</form>
 
 	<a name='email'><h1>Send an Email</h1></a>
 	<p>If you can't call, personalized emails are another way to get in touch with your legislators. Make sure to find your district using the address tool above so we know which legislator to direct your email to.</p>
@@ -125,7 +136,7 @@ make other info letter box auto expand
 
 					<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span></p>
 				
-					<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>
+					<!--<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>-->
 				</div><br>
 
 				<textarea name='petitionName' id='nameHolder' style='display: none;'></textarea>
@@ -134,10 +145,11 @@ make other info letter box auto expand
 				<input name='districts' id='districtsHolder' style='display: none;'>
 
 				<button id='sendEmail' type='button'>Prep Your Email</button>
-				<input type='submit' id='verifiedSendEmail' style='display: none'>
+				<input type='submit' name='prepTemplateEmail' id='verifiedSendEmail' style='display: none'>
 			</form>
 		</div>
 		<div id='preppedEmail'>
+				<b>Your email has not been sent yet. Copy and paste each section into your preferred email client to send it. Our automatic sending system is temporarily broken.</b> 
 				<p><b>To: </b><span id='legislatorEmailAddresses'>[State Legislators' Emails]</span></p>
 				<hr>
 				<p><b>Subject:</b> <span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span></p>
@@ -146,10 +158,12 @@ make other info letter box auto expand
 				<textarea id='finalEmail' style='width: 100%; max-width: 100%;' class='autoExpand' disabled>
 					
 				</textarea>
-				<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
+				<!--<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
 				<a target='_blank' id='finalSendGmail' href='https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=email@example.com&su=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Gmail</button></a>
-				<button>Send in Another Client</button>
-				<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
+				<button>Send in Another Client</button>-->
+
+				<!--<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
+				-->
 		</div>
 	</div>
 
@@ -265,18 +279,18 @@ make other info letter box auto expand
 					document.getElementById('districtsHolder').value = stringResponse;
 					fillDistrictInfo();
 				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
-					alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+					showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
 					clearDistrictInfo();
 				}
 			} else if (response.normalizedInput.state != 'NC') {
-				alert('Please enter an address in North Carolina.');
+				showPopup('Please enter an address in North Carolina.');
 				clearDistrictInfo();
 			} else { //is an address that google recognizes but google does not have any district data for it
-				alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+				showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
 				clearDistrictInfo();
 			}
 		}).fail(function() { //is not an address that google recognizes
-			alert('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
+			showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
 			clearDistrictInfo();
 		});
 	}
@@ -304,6 +318,7 @@ make other info letter box auto expand
 		const phone1 = response.officials[0].phones != undefined ? response.officials[0].phones[0] : 'Phone number not found.';
 		const phone2 = response.officials[1].phones != undefined ? response.officials[1].phones[0] : 'Phone number not found.';
 		const phoneInfo = response.offices[0].name + ' ' + response.officials[0].name + ': <a href="tel:' + phone1 + '">' + phone1 + '</a><br>' + response.offices[1].name + ' ' + response.officials[1].name + ': <a href="tel:' + phone2 + '">' + phone2 + '</a>'
+		document.getElementById('callReporting').style.display = 'block';
 		document.getElementById('phoneInfo').innerHTML = phoneInfo
 		//document.getElementById('loadingScreen').style.display = 'none';
 		var recipients = response.offices[0].name.split(' ')[2] + ' ' + response.officials[0].name + ' and ' + response.offices[1].name.split(' ')[2] + ' ' + response.officials[1].name;
@@ -318,6 +333,8 @@ make other info letter box auto expand
 
 	function clearDistrictInfo() {
 		document.getElementById('phoneInfo').innerHTML = 'Once you fill out your district, the phone numbers for your legislators\' offices will show up here.'
+		document.getElementById('callReporting').style.display = 'none';
+		document.getElementById('callReportForm').style.display = 'none';
 		document.getElementById('petitionRecipients').innerText = '[State Legislators\' Names]';
 		document.getElementById('legislatorEmailAddresses').innerText = '[State Legislators\' Emails]';
 		document.getElementById('petitionAddress').value = '';
@@ -338,11 +355,26 @@ make other info letter box auto expand
 			document.getElementById('legislatorEmailSubject').innerText = 'Personalized Email - Please End Lame-Duck Power Grabs in North Carolina'
 		}
 
-		document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+		/*document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
 		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+		*/
 
 		document.getElementById('writingEmail').style.display = 'none';
 		document.getElementById('preppedEmail').style.display = 'block';
+	}
+
+	function showCallReportForm() {
+		document.getElementById('callReporting').style.display = 'none';
+		document.getElementById('callReportForm').style.display = 'block';
+	}
+
+	function showPopup(text) {
+		document.getElementById('generalPopupBackground').style.display = 'block';
+		document.getElementById('popupInfo').innerText = text;
+	}
+
+	function hidePopup() {
+		document.getElementById('generalPopupBackground').style.display = 'none';
 	}
 
 </script>
@@ -364,70 +396,76 @@ make other info letter box auto expand
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$rejectForm = false;
 		$errorMsg = '';
-		if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
-			$errorMsg = $errorMsg . 'You have to fill out your name to send your email. ';
-			$rejectForm = true;
-		}
-		if (!isset($_POST['petitionHometown']) || $_POST['petitionHometown'] == '') {
-			$errorMsg = $errorMsg . 'Please add your city before you send your email. ';
-			$rejectForm = true;
-		}
-		if (!isset($_POST['districts']) || $_POST['districts'] == '') {
-			$errorMsg = $errorMsg . 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
-			$rejectForm = true;
-		}
-		if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
-			$errorMsg = $errorMsg . "You did not click on the I\'m not the robot button. Are you a robot? ";
-			$rejectForm = true;
-		} else {
-			//got from https://www.kaplankomputing.com/blog/tutorials/recaptcha-php-demo-tutorial/
-			$url = 'https://www.google.com/recaptcha/api/siteverify';
-			$data = array(
-				'secret' => '6Lci1acZAAAAACkQ6Wo6IeZ_0cmbpspYtLLqCYTZ',
-				'response' => $_POST["g-recaptcha-response"]
-			);
-			$options = array(
-				'http' => array (
-					'method' => 'POST',
-					'content' => http_build_query($data)
-				)
-			);
-			$verifyCaptcha = file_get_contents($url, false, stream_context_create($options));
-			$captcha_success = json_decode($verifyCaptcha);
-			if ($captcha_success->success == false) {
-				$errorMsg = $errorMsg . "Captcha verification failed. Please try again. ";
+		if (isset($_POST['prepTemplateEmail'])) {
+			if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
+				$errorMsg = $errorMsg . 'You have to fill out your name to send your email. ';
 				$rejectForm = true;
 			}
-		}
+			if (!isset($_POST['petitionHometown']) || $_POST['petitionHometown'] == '') {
+				$errorMsg = $errorMsg . 'Please add your city before you send your email. ';
+				$rejectForm = true;
+			}
+			if (!isset($_POST['districts']) || $_POST['districts'] == '') {
+				$errorMsg = $errorMsg . 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
+				$rejectForm = true;
+			}
+			/*if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
+				$errorMsg = $errorMsg . "You did not click on the I\'m not the robot button. Are you a robot? ";
+				$rejectForm = true;
+			} else {
+				//got from https://www.kaplankomputing.com/blog/tutorials/recaptcha-php-demo-tutorial/
+				$url = 'https://www.google.com/recaptcha/api/siteverify';
+				$data = array(
+					'secret' => '6Lci1acZAAAAACkQ6Wo6IeZ_0cmbpspYtLLqCYTZ',
+					'response' => $_POST["g-recaptcha-response"]
+				);
+				$options = array(
+					'http' => array (
+						'method' => 'POST',
+						'content' => http_build_query($data)
+					)
+				);
+				$verifyCaptcha = file_get_contents($url, false, stream_context_create($options));
+				$captcha_success = json_decode($verifyCaptcha);
+				if ($captcha_success->success == false) {
+					$errorMsg = $errorMsg . "Captcha verification failed. Please try again. ";
+					$rejectForm = true;
+				}
+			}*/
 
-		//TODO should I have used session? Probably. Although I only want it to store on failure. Otherwise its harder to share computer and easier to send duplicates to database that don't actually get mailed.
-		if ($rejectForm) {
-			echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
-			echo "<script>
-			alert('" . $errorMsg . "');
-			</script>";
-		} else {
-			$name = mysqli_real_escape_string($db,$_POST['petitionName']);
-			$title = mysqli_real_escape_string($db,$_POST['petitionTitle']);
-			$otherInfo = mysqli_real_escape_string($db,$_POST['petitionOtherInfo']);
+			//TODO should I have used session? Probably. Although I only want it to store on failure. Otherwise its harder to share computer and easier to send duplicates to database that don't actually get mailed.
+			if ($rejectForm) {
+				echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
+				echo "<script>
+				showPopup('" . $errorMsg . "');
+				</script>";
+			} else {
+				$name = mysqli_real_escape_string($db,$_POST['petitionName']);
+				$title = mysqli_real_escape_string($db,$_POST['petitionTitle']);
+				$otherInfo = mysqli_real_escape_string($db,$_POST['petitionOtherInfo']);
 
-			$districts = json_decode($_POST['districts'], true);
-			//TODO do validation to make sure there is an email etc
-			$sd = mysqli_real_escape_string($db, $districts['officials'][0]['emails'][0]);
-			$hd = mysqli_real_escape_string($db, $districts['officials'][1]['emails'][0]);
+				$districts = json_decode($_POST['districts'], true);
+				//TODO do validation to make sure there is an email etc
+				$sd = mysqli_real_escape_string($db, $districts['officials'][0]['emails'][0]);
+				$hd = mysqli_real_escape_string($db, $districts['officials'][1]['emails'][0]);
+				$datetime = gmdate("Y-m-d H:i:s");
+
+				$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_email, house_email, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
+				if ($result != 1) {
+					echo "<script>reportError('The following info was not successfully put into SQL database: " . $_POST['petitionName'] . " - " . $_POST['petitionTitle'] . " - " . $_POST['petitionOtherInfo'] . " - " . $districts['officials'][0]['emails'][0] . " - " . $districts['officials'][1]['emails'][0] . " - " . $datetime . "')</script>";
+				}
+				echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
+
+			}
+		} elseif (isset($_POST['submitCallDetails'])) {
+			$name = $_POST['callerName'];
+			$details = $_POST['callDetails'];
 			$datetime = gmdate("Y-m-d H:i:s");
-
-
-			$result = mysqli_query($db, "INSERT INTO email_log (name, title, otherInfo, senate_email, house_email, time) VALUES ('$name', '$title', '$otherInfo', '$sd', '$hd', '$datetime')");
+			$result = mysqli_query($db, "INSERT INTO call_log (name, details, time) VALUES ('$name', '$details', '$datetime')");
 			if ($result != 1) {
 				echo "<script>reportError('The following info was not successfully put into SQL database: " . $_POST['petitionName'] . " - " . $_POST['petitionTitle'] . " - " . $_POST['petitionOtherInfo'] . " - " . $districts['officials'][0]['emails'][0] . " - " . $districts['officials'][1]['emails'][0] . " - " . $datetime . "')</script>";
 			}
-
-			echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
-
 		}
-
-
 	}
 
 ?>

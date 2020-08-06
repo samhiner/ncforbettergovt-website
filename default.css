@@ -196,6 +196,19 @@
 		position: fixed;
 	}
 
+	#popupInfo {
+		font-size: 20pt;
+		max-width: 70%;
+		margin-top: 30%;
+		position: fixed;
+		text-align: center;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		background-color: white;
+	}
+
 	#loadingWheel {
 		border: 10px solid lightgrey;
 		border-radius: 50%;
