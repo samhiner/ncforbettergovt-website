@@ -149,7 +149,7 @@ make other info letter box auto expand
 			</form>
 		</div>
 		<div id='preppedEmail'>
-				<b>Your email has not been sent yet. Copy and paste each section into your preferred email client to send it. Our automatic sending system is temporarily broken.</b> 
+				<b>Your email has not been sent yet. Copy and paste the addresses, subject, and email text into your preferred email client to send it. Our automatic sending system is temporarily broken.</b> 
 				<p><b>To: </b><span id='legislatorEmailAddresses'>[State Legislators' Emails]</span></p>
 				<hr>
 				<p><b>Subject:</b> <span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span></p>
@@ -361,6 +361,8 @@ make other info letter box auto expand
 
 		document.getElementById('writingEmail').style.display = 'none';
 		document.getElementById('preppedEmail').style.display = 'block';
+
+		showPopup('Your email has not been sent yet. Copy and paste the addresses, subject, and email text into your preferred email client to send it. Thank you')
 	}
 
 	function showCallReportForm() {
