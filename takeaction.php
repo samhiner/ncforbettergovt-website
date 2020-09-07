@@ -79,37 +79,46 @@ make other info letter box auto expand
 </div>
 <script src='tabs.js'></script>
 <div class='article'>
-	<h1>How to Make a Difference</h1>
-	<p>The best way to cause change in government is by directly advocating to your representatives. Take a few minutes to call your legislators (or send an email if you can't call). Getting in touch with your legislators can have a huge impact on ending lame-duck power grabs in NC.</p> 
-	<p>Fill out your address and click "Find My District" so we know where to send your email (we do not store your address). Then, fill out the text boxes in the template email and send your email!</p>
-	<div id='districtFinder'>
-		<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%'><br>
-		<button type='button' onclick='getDistricts()' id='addressSubmit'>Find My District</button>
+	<div id='introBox'>
+		<h1>How to Make a Difference</h1>
+		<div style='width: 100%; text-align: center;'>
+			<ol style='display: inline-block; font-size: 15pt; border: 1px solid black; text-align: left; padding: 10px 20px 10px 40px;'>
+				<li>Fill out your address and click "Find My District".</li>
+				<li>Choose whether you want to call or email.</li>
+				<li>Personalize your email or make your call.</li>
+			</ol>
+		</div>
+		<div id='districtFinder'>
+			<input type='text' id='petitionAddress' name='petitionAddress' autocomplete='off' placeholder='Fill in your address here...' style='width: 80%; padding: 5px; font-size: 12pt; margin-bottom: 10px;'><br>
+			<button type='button' onclick='getDistricts()' style='font-size: 12pt;' id='addressSubmit'>Find My District</button>
+		</div>
 	</div>
 
-	<a name='call'><h1>Call Your Legislators</h1></a>
-	<p>Phone calls are the most effective way you can advocate to your legislators. Phone calls are entirely customizable, and can last just a few seconds and go something like this:</p>
-	<blockquote style='width: 50%; margin: auto;'>
-		<b>Them:</b> Hello, Senator Smith's Office.<br>
-		<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
-		<b>Them:</b> Thank you, we will make a note of it.
-	</blockquote><br>
-	<p>You can also have a longer phone call and even speak with your legislator to have your specific thoughts on the issues heard.</p>
-	<span id='phoneInfo' style='font-weight: bold;'><i>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</i></span>
-	<br><br>
-	<button id='callReporting' style='display: none; margin: auto;' onclick='showCallReportForm()'><b>Called Your Legislator? Let Us Know!</b></button>
-	<form method='post' action='#call' id='callReportForm' style='display: none; border: 1px solid black; font-family: sans-serif; padding: 10px;'>
-		Please take a second to tell us which legislator's office you called and how the call went. This helps us keep track of how many legislators are hearing about ending lame-duck power grabs. <br><br>
-		<div style='text-align: center;'>
-			<input name='callerName' type='text' placeholder='Your Name' style='margin-bottom: 10px'>
-			<input name='callDetails' type='text' placeholder='Call Details' style='width: calc(100% - 10px); margin-bottom: 10px;'><br>
-			<input type='submit' name='submitCallDetails'>
-		</div>
-	</form>
+	<div style='display: none;' id='callBox'>
+		<a name='call'><h1>Call Your Legislators</h1></a>
+		<p>Phone calls are the most effective way you can advocate to your legislators. Phone calls are entirely customizable, and can last just a few seconds and go something like this:</p>
+		<blockquote style='width: 50%; margin: auto;'>
+			<b>Them:</b> Hello, Senator Smith's Office.<br>
+			<b>You:</b> Hello, I am a constituent of Senator Smith and supporter of NC for Better Government. I'm calling to ask Senator Smith to support legislation to end lame-duck power grabs.<br>
+			<b>Them:</b> Thank you, we will make a note of it.
+		</blockquote><br>
+		<p>You can also have a longer phone call and even speak with your legislator to have your specific thoughts on the issues heard.</p>
+		<span id='phoneInfo' style='font-weight: bold;'><i>Once you fill out your district, the phone numbers for your legislators' offices will show up here.</i></span>
+		<br><br>
+		<button id='callReporting' style='display: none; margin: auto;' onclick='showCallReportForm()'><b>Called Your Legislator? Let Us Know!</b></button>
+		<form method='post' action='#call' id='callReportForm' style='display: none; border: 1px solid black; font-family: sans-serif; padding: 10px;'>
+			Please take a second to tell us which legislator's office you called and how the call went. This helps us keep track of how many legislators are hearing about ending lame-duck power grabs. <br><br>
+			<div style='text-align: center;'>
+				<input name='callerName' type='text' placeholder='Your Name' style='margin-bottom: 10px'>
+				<input name='callDetails' type='text' placeholder='Call Details' style='width: calc(100% - 10px); margin-bottom: 10px;'><br>
+				<input type='submit' name='submitCallDetails'>
+			</div>
+		</form>
+	</div>
 
-	<a name='email'><h1>Send an Email</h1></a>
-	<p>If you can't call, personalized emails are another way to get in touch with your legislators. Make sure to find your district using the address tool above so we know which legislator to direct your email to.</p>
-	<div>
+	<div id='emailBox' style='display: none;'>
+		<a name='email'><h1>Send an Email</h1></a>
+		<p>If you can't call, personalized emails are another way to get in touch with your legislators. Make sure to find your district using the address tool above so we know which legislator to direct your email to.</p>
 		<div id='writingEmail'>
 			<form method='post' action='#email' style='text-align: center;'>
 				<div id='petitionTemplate' name='petitionTemplate'>
@@ -127,7 +136,6 @@ make other info letter box auto expand
 					</sup>
 					After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
 					<textarea id='petitionOtherInfo' name='petitionOtherInfo' class='autoExpand' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
-					<span id='otherInfoSubmitArea'></span><!--this makes it so the other info is seen in the innertext-->
 					I think this needs to be addressed by our state legislature.
 
 					Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
@@ -143,30 +151,33 @@ make other info letter box auto expand
 				<textarea name='petitionTitle' id='titleHolder' style='display: none;'></textarea>
 				<textarea name='petitionHometown' id='hometownHolder' style='display: none;'></textarea>
 				<input name='districts' id='districtsHolder' style='display: none;'>
+				<input name='redirectURL' id='redirectURLHolder' style='display: none;'>
 
-				<button id='sendEmail' type='button'>Prep Your Email</button>
-				<input type='submit' name='prepTemplateEmail' id='verifiedSendEmail' style='display: none'>
-			</form>
-		</div>
-		<div id='preppedEmail'>
-				<b>Your email has not been sent yet. Copy and paste the addresses, subject, and email text into your preferred email client to send it. Our automatic sending system is temporarily broken.</b> 
-				<p><b>To: </b><span id='legislatorEmailAddresses'>[State Legislators' Emails]</span></p>
-				<hr>
-				<p><b>Subject:</b> <span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span></p>
-				<hr>
+				<!--<button id='sendGmail' type='button'>Send in Gmail</button>-->
+				<a target="_blank" id="gmailLink" onclick='sendEmail()'><button type='button'>Send in Gmail</button></a>
+				<a target="_blank" id="emailLink" onclick='sendEmail()'><button type='button'>Send in Default Mail App</button></a>
+				<button type='button' onclick='showPopup("Under construction. Please copy and paste to your preferred client.")'>Send in Another Client</button>
+				
 
-				<textarea id='finalEmail' style='width: 100%; max-width: 100%;' class='autoExpand' disabled>
-					
-				</textarea>
-				<!--<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
+				<input type='submit' name='prepTemplateEmail' id='verifiedSendEmail' style='display: none'><br>
+
+				<!--
+				<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
 				<a target='_blank' id='finalSendGmail' href='https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=email@example.com&su=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Gmail</button></a>
-				<button>Send in Another Client</button>-->
-
-				<!--<br><p>You will still have to click "Send" in the email client you choose, but the email will be automatically drafted for you.</p>
+				<button>Send in Another Client</button>
 				-->
+			</form>
+
+			<!--this is just used as global storage fix this lol-->
+			<!--also i should do a to: and subject: line for copy pasters-->
+			<span style='display: none;' id='legislatorEmailAddresses'>[State Legislators' Emails]</span>
+			<span style='display: none;' id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span>
+			<span style='display: none;' id='finalEmail'></span>
 		</div>
+
 	</div>
 
+	<br><hr>
 	<a name='join'><h1>Join Us</h1></a>
 	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
 	<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
@@ -221,20 +232,38 @@ make other info letter box auto expand
 	})
 
 	//submit address if you select a google autocomplete
-	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+	/*google.maps.event.addListener(autocomplete, 'place_changed', function() {
 		document.getElementById('addressSubmit').click();
-	});
+	});*/
 
-	//event listener that copies message to hidden input in form on submit
-	document.getElementById('sendEmail').addEventListener('click', function() {
-		if ((document.getElementById('petitionAddress').value != '') && document.getElementById('districtsHolder').value == '') { //TODO when you do manual district add them here
-			document.getElementById('addressSubmit').click();
-		}
+	function sendEmail() {
+		document.getElementById('verifiedSendEmail').click();
+	}
+
+	document.getElementById('emailBox').addEventListener('input', prepEmail);
+
+	//makes it so when the submit button is clicked all the hidden inputs have the needed info in them
+	function prepEmail() {
 		document.getElementById('nameHolder').value = document.getElementById('petitionName').innerText;
 		document.getElementById('titleHolder').value = document.getElementById('petitionTitle').innerText;
 		document.getElementById('hometownHolder').value = document.getElementById('petitionHometown').innerText;
-		document.getElementById('verifiedSendEmail').click();
-	});
+		$('.tooltip,.required').css('display', 'none');
+		document.getElementById('finalEmail').value = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + " and a supporter of NC for Better Government. " + document.getElementById('titleHolder').value + " After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.\n" + document.getElementById('petitionOtherInfo').value + "\nI think this needs to be addressed by our state legislature. Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
+		console.log(document.getElementById('finalEmail').value);
+		$('.tooltip,.required').css ('display', 'inline');
+
+		if (document.getElementById('petitionOtherInfo').value != '') {
+			document.getElementById('legislatorEmailSubject').innerText = 'Personalized Email - Please End Lame-Duck Power Grabs in North Carolina'
+		}
+
+		if (document.getElementById('petitionName').innerText != '' && document.getElementById('petitionHometown').innerText != '') {
+			document.getElementById('gmailLink').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+			document.getElementById('emailLink').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+		} else {
+			document.getElementById('gmailLink').removeAttribute('href');
+			document.getElementById('emailLink').removeAttribute('href');
+		}
+	}
 
 	//update signature when you update name
 	var petitionName = document.getElementById('petitionName');
@@ -278,6 +307,10 @@ make other info letter box auto expand
 					var stringResponse = JSON.stringify(response, null, 0)//.replace(/\'/g, "\\'");//.replace(/\\"/g, '"').replace(/\\n/g, '"').replace(/\r/g, '');
 					document.getElementById('districtsHolder').value = stringResponse;
 					fillDistrictInfo();
+					document.getElementById('callBox').style.display = 'block';
+					document.getElementById('emailBox').style.display = 'block';
+					document.getElementById('introBox').style.display = 'none';
+					document.getElementById('petitionOtherInfo').dispatchEvent(new Event("input")); //this makes sure the textbox is correctly sized before you input
 				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
 					showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
 					clearDistrictInfo();
@@ -309,7 +342,10 @@ make other info letter box auto expand
 		document.getElementById('petitionHometown').innerHTML = hometown;
 		document.getElementById('petitionOtherInfo').innerHTML = otherInfo;
 		document.getElementById('districtsHolder').value = districts;
+		
 		fillDistrictInfo();
+		getDistricts()
+		prepEmail();
 	}
 
 	function fillDistrictInfo() {
@@ -339,30 +375,6 @@ make other info letter box auto expand
 		document.getElementById('legislatorEmailAddresses').innerText = '[State Legislators\' Emails]';
 		document.getElementById('petitionAddress').value = '';
 		document.getElementById('petitionHometown').innerText = '';
-	}
-
-
-	function prepEmail(name, title, hometown, otherInfo, districts) {
-		refillPetition(name, title, hometown, otherInfo, districts); //just do this so I can grab the innertext from the petitiontemplate
-		//also that triggers filldistrictinfo which fills the "to:" section
-		//TODO hide help tags (required, question)
-		document.getElementById('otherInfoSubmitArea').innerHTML = document.getElementById('petitionOtherInfo').value + '<br><br>';
-		$('.tooltip,.required').css('display', 'none');
-		document.getElementById('finalEmail').value = document.getElementById('petitionTemplate').innerText;
-		$('.tooltip,.required').css ('display', 'inline');
-
-		if (document.getElementById('petitionOtherInfo').value != '') {
-			document.getElementById('legislatorEmailSubject').innerText = 'Personalized Email - Please End Lame-Duck Power Grabs in North Carolina'
-		}
-
-		/*document.getElementById('finalSendGmail').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
-		document.getElementById('finalSendEmail').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
-		*/
-
-		document.getElementById('writingEmail').style.display = 'none';
-		document.getElementById('preppedEmail').style.display = 'block';
-
-		showPopup('Your email has not been sent yet. Copy and paste the addresses, subject, and email text into your preferred email client to send it. Thank you')
 	}
 
 	function showCallReportForm() {
@@ -400,7 +412,7 @@ make other info letter box auto expand
 		$errorMsg = '';
 		if (isset($_POST['prepTemplateEmail'])) {
 			if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
-				$errorMsg = $errorMsg . 'You have to fill out your name to send your email. ';
+				$errorMsg = $errorMsg . 'Please fill out your name to send your email. ';
 				$rejectForm = true;
 			}
 			if (!isset($_POST['petitionHometown']) || $_POST['petitionHometown'] == '') {
@@ -408,7 +420,7 @@ make other info letter box auto expand
 				$rejectForm = true;
 			}
 			if (!isset($_POST['districts']) || $_POST['districts'] == '') {
-				$errorMsg = $errorMsg . 'You have to fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
+				$errorMsg = $errorMsg . 'Please fill out your address and click "find my district" so we know which legislator to send your email to. We do not store your address. ';
 				$rejectForm = true;
 			}
 			/*if (!isset($_POST['g-recaptcha-response']) || $_POST['g-recaptcha-response'] == '') {
@@ -456,7 +468,10 @@ make other info letter box auto expand
 				if ($result != 1) {
 					echo "<script>reportError('The following info was not successfully put into SQL database: " . $_POST['petitionName'] . " - " . $_POST['petitionTitle'] . " - " . $_POST['petitionOtherInfo'] . " - " . $districts['officials'][0]['emails'][0] . " - " . $districts['officials'][1]['emails'][0] . " - " . $datetime . "')</script>";
 				}
-				echo "<script>prepEmail('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`)</script>";
+
+				echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`);</script>";
+				echo "<script>showPopup('Thank you for sending an email!')</script>";
+
 
 			}
 		} elseif (isset($_POST['submitCallDetails'])) {
