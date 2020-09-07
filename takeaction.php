@@ -309,7 +309,7 @@ make other info letter box auto expand
 					fillDistrictInfo();
 					document.getElementById('callBox').style.display = 'block';
 					document.getElementById('emailBox').style.display = 'block';
-					document.getElementById('introBox').style.display = 'none';
+					document.getElementById('districtFinder').style.display = 'none';
 					document.getElementById('petitionOtherInfo').dispatchEvent(new Event("input")); //this makes sure the textbox is correctly sized before you input
 				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
 					showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
