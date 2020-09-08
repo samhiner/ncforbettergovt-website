@@ -13,7 +13,7 @@ make other info letter box auto expand
 */
 ?>
 <?php
-	$googleApiKey = 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo'; //only have to change key in one place when going from dev to prod
+	$googleApiKey = 'AIzaSyBVnn5ByjN3MWKFjbduNgSgkxB0PkcuIeU'; //only have to change key in one place when going from dev to prod
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -122,27 +122,39 @@ make other info letter box auto expand
 		<div id='writingEmail'>
 			<form method='post' action='#email' style='text-align: center;'>
 				<div id='petitionTemplate' name='petitionTemplate'>
-					<p>Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
 
-					My name is
-					<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
-					I'm a constituent of yours from
-					<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable required></span><span class='required'>*</span>
-					and a supporter of NC for Better Government.
-					<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
-					<sup class='tooltip' onclick='toggleToolTipText()'>
-						[?]
-						<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
-					</sup>
-					After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
-					<textarea id='petitionOtherInfo' name='petitionOtherInfo' class='autoExpand' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
-					I think this needs to be addressed by our state legislature.
+					<b>To: </b><span id='legislatorEmailAddresses'>[State Legislators' Emails]</span><br>
+					<div style='text-align: right;'><button type='button' class='copyButton' onclick='copyText("legislatorEmailAddresses", 0)'>Copy to Clipboard</button></div>
+					<hr>
+					<b>Subject: </b><span id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span><br>
+					<div style='text-align: right;'><button type='button' class='copyButton' onclick='copyText("legislatorEmailSubject", 1)'>Copy to Clipboard</button></div>
+					<hr>
+					<p>
+						Dear <span id='petitionRecipients'>[State Legislators' Names]</span>,<br><br>
 
-					Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
+						My name is
+						<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
+						I'm a constituent of yours from
+						<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable required></span><span class='required'>*</span>
+						and a supporter of NC for Better Government.
+						<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
+						<sup class='tooltip' onclick='toggleToolTipText()'>
+							[?]
+							<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
+						</sup>
+						After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
+						<textarea id='petitionOtherInfo' name='petitionOtherInfo' class='autoExpand' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
+						I think this needs to be addressed by our state legislature.
 
-					Sincerely,<br><br>
+						Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
 
-					<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span></p>
+						Sincerely,<br><br>
+
+						<span id='petitionSignature' class='expandingInput' data-placeholder='Your Name' disabled></span>
+						<!--this copy button is floated instead of text aligned because there is blank space to the right of the salutation where it can be and look better than being below-->
+						<button type='button' style='float: right;' class='copyButton' onclick='document.getElementById("finalEmail").style.display = "block"; copyText("finalEmail", 2); document.getElementById("finalEmail").style.display = "none";'>Copy to Clipboard</button>
+					</p>
+					
 				
 					<!--<div class='g-recaptcha' data-sitekey='6Lci1acZAAAAAAGcka5BTjUPbg6BUpTlsWQokCEA'></div>-->
 				</div><br>
@@ -154,13 +166,13 @@ make other info letter box auto expand
 				<input name='redirectURL' id='redirectURLHolder' style='display: none;'>
 
 				<!--<button id='sendGmail' type='button'>Send in Gmail</button>-->
-				<a target="_blank" id="gmailLink" onclick='sendEmail()'><button type='button'>Send in Gmail</button></a>
-				<a target="_blank" id="emailLink" onclick='sendEmail()'><button type='button'>Send in Default Mail App</button></a>
-				<button type='button' onclick='showPopup("Under construction. Please copy and paste to your preferred client.")'>Send in Another Client</button>
-				
+				<a target="_blank" id="gmailLink" onclick='document.getElementById("verifiedSendEmail").click()'><button type='button'>Send in Gmail</button></a>
+				<a target="_blank" id="emailLink" onclick='document.getElementById("verifiedSendEmail").click()'><button type='button'>Send in Default Mail App</button></a>
+				<a target="_blank" onclick='document.getElementById("verifiedCopyEmail").click()'><button type='button'>Send in Other Mail App/Site</button></a><br><br>
+				<p>Clicking the "send" button will automatically draft the email and open your preferred email client. You will then have to click send. Alternatively, you can copy and paste the email into your preferred email application.</p>
 
-				<input type='submit' name='prepTemplateEmail' id='verifiedSendEmail' style='display: none'><br>
-
+				<input type='submit' name='prepSendEmail' id='verifiedSendEmail' style='display: none;'>
+				<input type='submit' name='prepCopyEmail' id='verifiedCopyEmail' style='display: none;'>
 				<!--
 				<a target='_blank' id='finalSendEmail' href='mailto:email@example.com?subject=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Default App</button></a>
 				<a target='_blank' id='finalSendGmail' href='https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=email@example.com&su=Could not automatically copy your email&body=Please manually copy your email to here from our website'><button>Send in Gmail</button></a>
@@ -169,9 +181,6 @@ make other info letter box auto expand
 			</form>
 
 			<!--this is just used as global storage fix this lol-->
-			<!--also i should do a to: and subject: line for copy pasters-->
-			<span style='display: none;' id='legislatorEmailAddresses'>[State Legislators' Emails]</span>
-			<span style='display: none;' id='legislatorEmailSubject'>Please End Lame-Duck Power Grabs in North Carolina</span>
 			<span style='display: none;' id='finalEmail'></span>
 		</div>
 
@@ -231,13 +240,32 @@ make other info letter box auto expand
 		}
 	})
 
+	//if mobile no gmail option
+	//from https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device
+	if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+		|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) { 
+		document.getElementById('gmailLink').style.display = 'none';
+	}
+
+
 	//submit address if you select a google autocomplete
 	/*google.maps.event.addListener(autocomplete, 'place_changed', function() {
 		document.getElementById('addressSubmit').click();
 	});*/
 
-	function sendEmail() {
-		document.getElementById('verifiedSendEmail').click();
+	//from https://www.arclab.com/en/kb/htmlcss/how-to-copy-text-from-html-element-to-clipboard.html
+	function copyText(id, buttonNumber) {
+		var r = document.createRange();
+		r.selectNode(document.getElementById(id));
+		window.getSelection().removeAllRanges();
+		window.getSelection().addRange(r);
+		document.execCommand('copy');
+		window.getSelection().removeAllRanges();
+
+		document.getElementsByClassName('copyButton')[buttonNumber].innerText = 'Copied!';
+		setTimeout(function() {
+			document.getElementsByClassName('copyButton')[buttonNumber].innerText = 'Copy to Clipboard';
+		}, 2000);
 	}
 
 	document.getElementById('emailBox').addEventListener('input', prepEmail);
@@ -248,8 +276,8 @@ make other info letter box auto expand
 		document.getElementById('titleHolder').value = document.getElementById('petitionTitle').innerText;
 		document.getElementById('hometownHolder').value = document.getElementById('petitionHometown').innerText;
 		$('.tooltip,.required').css('display', 'none');
-		document.getElementById('finalEmail').value = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + " and a supporter of NC for Better Government. " + document.getElementById('titleHolder').value + " After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.\n" + document.getElementById('petitionOtherInfo').value + "\nI think this needs to be addressed by our state legislature. Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
-		console.log(document.getElementById('finalEmail').value);
+		document.getElementById('finalEmail').innerHTML = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + " and a supporter of NC for Better Government. " + document.getElementById('titleHolder').value + " After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.\n" + document.getElementById('petitionOtherInfo').value + "\nI think this needs to be addressed by our state legislature. Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
+		console.log(document.getElementById('finalEmail').innerHTML);
 		$('.tooltip,.required').css ('display', 'inline');
 
 		if (document.getElementById('petitionOtherInfo').value != '') {
@@ -257,8 +285,8 @@ make other info letter box auto expand
 		}
 
 		if (document.getElementById('petitionName').innerText != '' && document.getElementById('petitionHometown').innerText != '') {
-			document.getElementById('gmailLink').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
-			document.getElementById('emailLink').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').value.replace(/\n/g, '%0d%0a');
+			document.getElementById('gmailLink').href = 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=' + document.getElementById('legislatorEmailAddresses').innerText + '&su=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').innerHTML.replace(/\n/g, '%0d%0a');
+			document.getElementById('emailLink').href = 'mailto:' + document.getElementById('legislatorEmailAddresses').innerText + '?subject=' + document.getElementById('legislatorEmailSubject').innerText + '&body=' + document.getElementById('finalEmail').innerHTML.replace(/\n/g, '%0d%0a');
 		} else {
 			document.getElementById('gmailLink').removeAttribute('href');
 			document.getElementById('emailLink').removeAttribute('href');
@@ -310,6 +338,7 @@ make other info letter box auto expand
 					document.getElementById('callBox').style.display = 'block';
 					document.getElementById('emailBox').style.display = 'block';
 					document.getElementById('districtFinder').style.display = 'none';
+					prepEmail(); //so there is something in finalemail in case someone clicks the copy to clipboard button before making changes
 					document.getElementById('petitionOtherInfo').dispatchEvent(new Event("input")); //this makes sure the textbox is correctly sized before you input
 				} else { //google recognizes the address and has some district data for it, but does not have state rep/sen
 					showPopup('We could not find a district for your address. Make sure your address is correct. If it still is not working, please try manually finding your district.');
@@ -410,7 +439,7 @@ make other info letter box auto expand
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$rejectForm = false;
 		$errorMsg = '';
-		if (isset($_POST['prepTemplateEmail'])) {
+		if (isset($_POST['prepSendEmail']) || isset($_POST['prepCopyEmail'])) {
 			if (!isset($_POST['petitionName']) || $_POST['petitionName'] == '') {
 				$errorMsg = $errorMsg . 'Please fill out your name to send your email. ';
 				$rejectForm = true;
@@ -470,7 +499,12 @@ make other info letter box auto expand
 				}
 
 				echo "<script>refillPetition('" . $_POST['petitionName'] . "', '" . $_POST['petitionTitle'] . "', '" . $_POST['petitionHometown'] . "', '" . $_POST['petitionOtherInfo'] . "', `" . $_POST['districts'] . "`);</script>";
-				echo "<script>showPopup('Thank you for sending an email!')</script>";
+
+				if (isset($_POST['prepSendEmail'])) {
+					echo "<script>showPopup('Thank you for sending an email!')</script>";
+				} else {
+					echo '<script>showPopup("To send your email through a different mail app/website, copy the email from this page into your preferred app/website.");$(".copyButton").css ("display", "inline-block");</script>';
+				}
 
 
 			}
