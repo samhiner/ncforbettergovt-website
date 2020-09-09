@@ -13,7 +13,7 @@ make other info letter box auto expand
 */
 ?>
 <?php
-	$googleApiKey = 'AIzaSyBVnn5ByjN3MWKFjbduNgSgkxB0PkcuIeU'; //only have to change key in one place when going from dev to prod
+	$googleApiKey = 'AIzaSyBgbG8AKNNa9_vmg1o5pM49HFLESg8rNoo'; //only have to change key in one place when going from dev to prod
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -135,18 +135,17 @@ make other info letter box auto expand
 						My name is
 						<span id='petitionName' data-placeholder='Your Name' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
 						I'm a constituent of yours from
-						<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable required></span><span class='required'>*</span>
-						and a supporter of NC for Better Government.
+						<span id='petitionHometown' data-placeholder='Your Hometown' class='expandingInput' contenteditable required></span><span class='required'>*</span>.
 						<span id='petitionTitle' data-placeholder='Your Title' class='expandingInput' contenteditable></span>
 						<sup class='tooltip' onclick='toggleToolTipText()'>
 							[?]
 							<span class='tooltipText'>Add your occupation (if applicable) and any positions or influence you have in your community. E.g. "I am a student at Davidson College and am a member of the Statesville Chamber of Commerce."</span>
 						</sup>
-						After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.<br>
+						I recently learned about lame-duck changes to the powers of elected offices, where the state legislature can make changes to an office right after the election so that an elected official ends up taking a different office than the one they were elected to.
+						This undermines the right of the people to pick the best candidate for a given office by allowing a lame-duck legislature to change that office itself right after the election.<br>
 						<textarea id='petitionOtherInfo' name='petitionOtherInfo' class='autoExpand' style='width: 100%; max-width: 100%' placeholder='Personalized emails have a much larger influence on legislators. Add your own thoughts about why ending lame-duck power grabs is so important. Remember to be polite!'></textarea><br>
-						I think this needs to be addressed by our state legislature.
 
-						Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.<br><br>
+						Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck changes to the powers of elected offices and support legislation to end this practice in North Carolina.<br><br>
 
 						Sincerely,<br><br>
 
@@ -276,7 +275,8 @@ make other info letter box auto expand
 		document.getElementById('titleHolder').value = document.getElementById('petitionTitle').innerText;
 		document.getElementById('hometownHolder').value = document.getElementById('petitionHometown').innerText;
 		$('.tooltip,.required').css('display', 'none');
-		document.getElementById('finalEmail').innerHTML = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + " and a supporter of NC for Better Government. " + document.getElementById('titleHolder').value + " After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.\n" + document.getElementById('petitionOtherInfo').value + "\nI think this needs to be addressed by our state legislature. Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
+		document.getElementById('finalEmail').innerHTML = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + ". " + document.getElementById('titleHolder').value + "I recently learned about lame-duck changes to the powers of elected offices, where the state legislature can make changes to an office right after the election so that an elected official ends up taking a different office than the one they were elected to. This undermines the right of the people to pick the best candidate for a given office by allowing a lame-duck legislature to change that office itself right after the election." + document.getElementById('petitionOtherInfo').value + "Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck changes to the powers of elected offices and support legislation to end this practice in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
+		//old document.getElementById('finalEmail').innerHTML = "Dear " + document.getElementById('petitionRecipients').innerText + ",\n\nMy name is " + document.getElementById('nameHolder').value + ". I'm a constituent of yours from " + document.getElementById('hometownHolder').value + " and a supporter of NC for Better Government. " + document.getElementById('titleHolder').value + " After learning about lame-duck power grabs and their effects, I am concerned about the effects that continuing to let lame-duck power grabs happen could have on our democracy.\n" + document.getElementById('petitionOtherInfo').value + "\nI think this needs to be addressed by our state legislature. Should you be re-elected to the NC General Assembly this November, I ask you to oppose lame-duck power grabs and support legislation to end them in North Carolina.\n\nSincerely,\n\n" + document.getElementById('nameHolder').value;
 		console.log(document.getElementById('finalEmail').innerHTML);
 		$('.tooltip,.required').css ('display', 'inline');
 
