@@ -423,15 +423,15 @@ make other info letter box auto expand
 </script>
 <div id="copyright" class="container">
 	<ul class='contact'>
-		<li><a href="comingsoon" class="icon icon-facebook"></a></li>
+		<li><a href="https://www.facebook.com/ncforbettergovt" class="icon icon-facebook"></a></li>
 		<li><a href="https://www.instagram.com/ncforbettergovt/" class="icon icon-instagram"></a></li>
-		<li><a href="comingsoon" class="icon icon-twitter"></a></li>
-		<li><a href="comingsoon" class="icon icon-linkedin"></a></li>
+		<!-- <li><a href="comingsoon" class="icon icon-twitter"></a></li> -->
+		<li><a href="https://www.linkedin.com/company/ncforbettergovt" class="icon icon-linkedin"></a></li>
 		<li><a href="takeaction#mailinglist" class="icon icon-rss"></a></li>
 	</ul>
 
 	
-	<p>Adapted from <a href='https://templated.co/swarming'>Swarming</a> by <a href="https://templated.co" rel="nofollow">TEMPLATED</a> | Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
+	<p>Hosted on <a href='https://www.dreamhost.com/r.cgi?2475375'>Dreamhost</a></p>
 </div>
 <?php
 	include('config.php');
