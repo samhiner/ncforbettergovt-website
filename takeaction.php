@@ -70,10 +70,10 @@ make other info letter box auto expand
 	<div id="menu" class="container">
 		<ul>
 			<li><a href="index">Home</a></li>
-			<li><a href="issues">Our Issues</a></li>
+			<li><a href="causes">Our Causes</a></li>
 			<li class="current_page_item"><a href="takeaction">Take Action</a></li> <!--style='border: 2px solid #1f4a82; border-radius: 5px; background-color: #d6d6d6;'-->
-			<li><a href="about">About</a></li>
-			<li><a href="volunteer">Volunteer</a></li>
+			<li><a href="about">About Us</a></li>
+			<li><a href="blog">Blog</a></li>
 		</ul>
 	</div>
 </div>
@@ -187,7 +187,7 @@ make other info letter box auto expand
 
 	<br><hr>
 	<a name='join'><h1>Join Us</h1></a>
-	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs. <a href='volunteer'>Click here</a> to learn more about volunteering and to sign up.</p>
+	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs.</p>
 	<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
 
 	<!--<a name='donate'><h1>Donate</h1></a>

@@ -9,7 +9,7 @@
 		margin: 0px;
 		padding: 0px;
 		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 12pt;
+		font-size: 14pt;
 		font-weight: 400;
 	}
 
@@ -51,11 +51,8 @@
 	}
 
 	.textbox {
-		width: 40%;
-		margin: auto;
-		padding: 10px;
-		text-align: center;	
-
+		padding: 1em;
+		text-align: center;
 		background: rgba(31, 74, 130, 0.75);
 		color: white;
 		border-radius: 7px;
@@ -67,7 +64,7 @@
 
 	.article {
 		background: white;
-		margin: 2em auto 2em auto;
+		margin: 1em auto 2em auto;
 		width: 60%;
 	}
 
@@ -77,8 +74,28 @@
 		line-height: 2;
 	}
 
+	/*.article h2 {
+		text-align: center;
+		line-height: 2;
+	}*/
+
 	.article p {
 		text-align: justify;
+	}
+
+	.text_wrap {
+		display: flex;
+		width: 75%;
+		margin: 2em auto 2em auto;
+	}
+
+	.text_wrap div {
+		vertical-align: top;
+		padding: 0 1em 0 1em;
+	}
+
+	.text_wrap h1 {
+		text-align: center;
 	}
 
 	.dropdown-content {
@@ -329,46 +346,6 @@
 		display: none;
 	}
 
-	@media only screen and (max-width: 1024px) {
-		.article {
-			width: 80%;
-		}
-		.textbox {
-			width: 50%;
-		}
-	}
-
-	@media only screen and (max-width: 768px) {
-		.article {
-			width: 90%;
-		}
-		.textbox {
-			width: 60%;
-		}
-	}
-
-	@media only screen and (max-width: 640px) {
-		.article {
-			width: 95%
-		}
-		.textbox {
-			width: 70%;
-		}
-		#menu {
-			font-size: 20pt;
-		}
-		.profile_text {
-			width: 100%;
-		}
-		.profile img {
-			width: 40%;
-			float: none;
-			text-align: center;
-		}
-		.profile {
-			text-align: center;
-		}
-	}
 
 
 
@@ -491,7 +468,7 @@
 		letter-spacing: 1px;
 		text-decoration: none;
 		text-transform: uppercase;
-		font-size: 1em;
+		font-size: 15pt;
 		font-weight: 400;
 		color: #151515;
 		letter-spacing: 1px
@@ -511,7 +488,6 @@
 
 	#menu .current_page_item a:hover {
 		font-weight: 700;
-		font-size: 1em;
 		letter-spacing: 1px;
 	}
 
@@ -535,7 +511,7 @@
 	#page
 	{
 		overflow: hidden;
-		padding: 10em 0em;
+		padding: 20em 0em 0em 0em;
 	}
 
 /*********************************************************************************/
@@ -571,4 +547,47 @@
 	{
 		text-decoration: none;
 		color: #8C8C8C;
+	}
+
+	
+	@media only screen and (max-width: 1024px) {
+		.article {
+			width: 80%;
+		}
+		#menu a {
+			font-size: 2.75vw;
+		}
+		.text_wrap {
+			width: 90%;
+		}
+	}
+
+	@media only screen and (max-width: 810px) {
+		.article {
+			width: 90%;
+		}
+		.text_wrap {
+			flex-direction: column-reverse;
+			width: 95%;
+		}
+	}
+
+	@media only screen and (max-width: 640px) {
+		.article {
+			width: 95%
+		}
+		.text_wrap {
+			width: 100%;
+		}
+		.profile_text {
+			width: 100%;
+		}
+		.profile img {
+			width: 40%;
+			float: none;
+			text-align: center;
+		}
+		.profile {
+			text-align: center;
+		}
 	}
