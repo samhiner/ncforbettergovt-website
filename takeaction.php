@@ -186,9 +186,6 @@ make other info letter box auto expand
 	</div>
 
 	<br><hr>
-	<a name='join'><h1>Join Us</h1></a>
-	<p>Want to take your impact to the next level? Join us as an official volunteer! Volunteers spread our cause to more people around North Carolina and meet with their legislators to discuss lame-duck power grabs.</p>
-	<p>If you are not sure if you want to sign up as a volunteer yet or are looking for a more low-commitment way to be involved, sign up for our <a href='mailinglist'>monthly mailing list</a>.</p>
 
 	<!--<a name='donate'><h1>Donate</h1></a>
 	<p>All donations go directly toward maintaining this website and covering other costs that are incurred in advertising our cause to people around North Carolina. A financial report will be published every quarter detailing our budget.</p>
@@ -196,6 +193,129 @@ make other info letter box auto expand
 		<iframe src="https://givebutter.com/embed/c/x0xz03" width="100%" height="615px" style="max-width: 601px;" name="givebutter" frameborder="0" scrolling="no" seamless allowpaymentrequest></iframe><script src="https://givebutter.com/js/widget.js"></script>
 	</div>-->
 </div>
+<div class='article'>
+	<h1>Volunteer Information</h1>
+	<b>Volunteer Opportunities:</b>
+	<p>Volunteers are the most important part of NC for Better Government. As a constituent in NC, your legislators will listen to you if you make your voice heard. Volunteers for NC for Better Government advocate to their state legislators through meetings, phone calls, social media, and attending events. Volunteers also spread the cause by getting more people to call their legislators and advertising the cause through different outlets. Alternatively, you can sign up for our <a href='mailinglist'>mailing list</a>.</p>
+	<b>Benefits:</b>
+	<ul>
+		<li>Connect with state legislators.</li>
+		<li>Learn how to influence elected officials.</li>
+		<li>Join a community of people interested in politics and activism in North Carolina.</li>
+		<li>Have a real positive impact on government in North Carolina.</li>
+	</ul>
+	<b>Volunteer Responsibilities:</b>
+	<ul>
+		<li>Meet with your state legislator to discuss lame-duck power grabs and attend their (virtual or physical) campaign events.</li>
+		<li>Get 20 people to call (or email) each month.</li>
+		<li>Email and call your state legislators once each month.</li>
+	</ul>
+	<b>Other specific things you can do as a volunteer include:</b>
+	<ul>
+		<li>Attend virtual or physical events that your state legislator holds.</li>
+		<li>Communicate with their legislator via social media</li>
+		<li>Communicate with community leaders to get their support of NC for Better Government</li>
+		<li>Find other ways to market NC for Better Government, such as through traditional media or attending events.</li>
+	</ul>
+	<h1>Join Us</h1>
+	<p>Thank you for your interest in volunteering with us! To continue, please fill out the form below. We will get back to you within 48 hours to schedule a phone call to talk more about your role in NC for Better Government.</p>
+	<div style='text-align: center;'><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSda8Ke7cFIc7ZJ84Rva88Zlk8PetzCt7sk-hh7-snn2rWD3Ug/viewform?embedded=true" width="640" height="850" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe></div>
+
+	<h1>Our Volunteers</h1>
+	<div class='volunteerList'>
+		<div>
+			<img src='images/volunteers/4.jpg'>
+			<p class='volunteerName'>Anuragh Sriram</p>
+			<p>Asheboro, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/5.jpg'>
+			<p class='volunteerName'>Hanna DeBord</p>
+			<p>Piney Creek, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/8.jpg'>
+			<p class='volunteerName'>Nnamdi Obi</p>
+			<p>Greenville, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/1.jpg'>
+			<p class='volunteerName'>Nathan Zhang</p>
+			<p>Winston-Salem, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Carson Sullivan</p>
+			<p>Wilkes, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Frank Lin</p>
+			<p>Rocky Mount, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Sydney Mason</p>
+			<p>Hillsborough, NC</p>
+			<i>Joined July 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>James Li</p>
+			<p>Kernersville, NC</p>
+			<i>Joined August 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Vihaan Ambre</p>
+			<p>Cary, NC</p>
+			<i>Joined August 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Aarav Mehta</p>
+			<p>Raleigh, NC</p>
+			<i>Joined August 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Marwan Bit</p>
+			<p>Waxhaw, NC</p>
+			<i>Joined September 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Maken Koilakh</p>
+			<p>Hickory, NC</p>
+			<i>Joined September 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Ryan S. Kalo</p>
+			<p>Gibsonville, NC</p>
+			<i>Joined September 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Brandon Tucker</p>
+			<p>Charlotte, NC</p>
+			<i>Joined September 2020</i>
+		</div>
+		<div>
+			<img src='images/volunteers/no.jpg'>
+			<p class='volunteerName'>Jack McMahon</p>
+			<p>Beaufort, NC</p>
+			<i>Joined November 2020</i>
+		</div>
+	</div>
+</div>
+
 <script>
 	//placeholder for input parts of email form
 	//this is from https://htmldom.dev/placeholder-for-a-contenteditable-element/
