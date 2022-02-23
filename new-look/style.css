@@ -6,6 +6,8 @@
     --text-complement: #fff8e8;
     --border-color: transparent;
     --card-bg: white;
+    --stain: rgba(9,35,84,0.3);
+    --stain-invert: rgba(255, 255, 255,0.3);
 
     --secondary:  #C00000;
     --secondary-dark: #640000;
@@ -23,6 +25,8 @@
     --text-complement: rgb(9,35,84);
     --text-tertiary: #C00000;
     --card-bg: rgb(9,35,84);
+    --stain: rgba(255, 255, 255,0.3);
+    --stain-invert: rgba(9,35,84,0.3);
 
     --secondary:  #640000;
     --secondary-dark: #270202;
@@ -54,7 +58,7 @@ body {
     border: 1px solid var(--text-contrast);
     background: var(--background);
     border-radius: 0 1rem 1rem 0;
-    position: absolute;
+    position: fixed;
     bottom: 15%;
     left: -1px;
     z-index: 50;
@@ -99,10 +103,12 @@ body {
     padding: 0;
 }
 
+.bg-main-dark {
+    background: var(--main-dark);
+}
+
 .introduction .possibilities {
     border-radius: 1rem 1rem 0 0;
-    background: var(--main);
-    background: linear-gradient(90deg, var(--main-dark) 0%, var(--main) 100%);
     padding: 7rem 0;
 }
 
@@ -154,13 +160,13 @@ body {
 
 .tagline-feature {
     margin-top: -5rem;
-    border-radius: 1rem;
-    background: var(--card-bg);
+}
+
+
+
+.paper-shadow {
     -webkit-box-shadow: 0px 0px 50px 20px rgba(0,0,0,0.33); 
     box-shadow: 0px 0px 50px 20px rgba(0,0,0,0.33);
-    min-height: 50vh;
-    min-width: 40vw;
-    max-width: 80vw;
 }
 
 .animated-element {
@@ -171,7 +177,20 @@ body {
     color: var(--text-contrast);
 }
 
+.card {
+    border-radius: 1rem;
+    background: var(--card-bg);
+}
+
+.card.tagline-feature {
+    min-height: 50vh;
+    min-width: 40vw;
+    max-width: 80vw;
+}
+
 .card-decor {
+    color: yellow;
+    text-transform: uppercase;
     position: absolute;
     left: 0;
     top: 0;
@@ -184,13 +203,16 @@ body {
 .bg-red {
     background: var(--secondary);
     background: linear-gradient(-90deg, var(--secondary-dark) 0%, var(--secondary) 100%);
+}
+
+.flag-top {
     border-radius: 0 0 1rem 1rem;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        height: 50vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 50vh;
 }
 
 
@@ -258,19 +280,20 @@ body {
         height: 50%;
     }
 
-    .introduction .bar.bg-red {
+    .introduction .bar.flag-top {
         border-radius: 0 1rem 0 0;
     }
 
-    .introduction .bar.bg-white {
+    .introduction .bar.flag-bottom {
         border-radius: 0 0 1rem 0;
     }
 
-    .bg-red {
+    .flag-top {
         position: initial;
         height: initial;
     }
 }
+
 
 @media (min-width: 992px) {
 
@@ -291,11 +314,13 @@ body {
 .navbar {
     color: var(--text-complement);
     justify-content: space-between;
+    border-radius: 1rem;
+    padding: 0;
+    margin: 0.5rem 1rem;
 }
 
-
-:root[data-theme="dark"] .navbar {
-    color: var(--text-contrast);
+.bg-main {
+    background: var(--main);
 }
 
 .navbar-brand {
@@ -303,6 +328,12 @@ body {
     font-size: 2.4rem;
     text-transform: uppercase;
     font-family: 'Antonio', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: var(--text-complement) !important;
+}
+
+
+:root[data-theme="dark"] .navbar, :root[data-theme="dark"] .navbar-brand {
+    color: var(--text-contrast) !important;
 }
 
 
@@ -360,3 +391,76 @@ body {
       padding-top: 5rem;
       padding-bottom: 5rem;
   }
+
+  .top-section {
+      margin-top: 15vh;
+  }
+
+  .card-decor.problem {
+      border-radius: 1rem 0 0 0;
+      background: var(--secondary);
+  }
+
+  .problem, .solution {
+      height: 50%;
+  }
+
+  .solution {
+      top: 50%;
+  }
+
+  .card-decor.solution {
+    border-radius: 0 0 0 1rem;
+    background: var(--main-dark);
+  }
+
+  .card-decor > div {
+      transform: rotate(-90deg);
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+  }
+
+  .card:not(.tagline-feature) strong {
+      font-size: 2rem;
+  }
+
+  .card:not(.tagline-feature) {
+      font-size: 1.5rem;
+  }
+
+  .card img {
+      border-radius: 1rem;
+  }
+
+  .side-label {
+      position: absolute;
+      top: 0; 
+      left: 0;
+      text-transform: uppercase;
+      font-weight: bold;
+      z-index: 10;
+      writing-mode: sideways-lr;
+      text-orientation: mixed;
+      margin-top: 2rem;
+      margin-left: 0.25rem;
+      color: var(--stain);
+      user-select: none;
+  }
+
+  .side-label.invert {
+    color: var(--stain-invert);
+  }
+
+  
+.bg-blue {
+    background: var(--main);
+    background: linear-gradient(90deg, var(--main-dark) 0%, var(--main) 100%);
+}
+
+.bg-blue-invert {
+    background: var(--main);
+    background: linear-gradient(180deg, var(--main-dark) 0%, var(--main) 100%);
+}
